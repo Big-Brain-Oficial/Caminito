@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explorá los prototipos CAD del proyecto: carrito de relevamiento, carcasa para celular y portapowerbank. Modelos 3D, piezas, medidas y descargas.">
+  <meta name="theme-color" content="#171d20"><title>Forma — Laboratorio de prototipos</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="./" aria-label="Forma, inicio"><span class="brand-symbol">f<span>°</span></span><div>forma<span>LABORATORIO DE PROTOTIPOS</span></div></a>
+  <div class="workspace-label"><span class="workspace-dot"></span> Proyecto Vereda Accesible</div>
+  <div class="nav-caption">BIBLIOTECA <span>03</span></div>
+  <nav id="catalog" aria-label="Modelos CAD"></nav>
+  <div class="sidebar-note"><span class="small-cross">✳</span><h3>Ideas que toman forma.</h3><p>Un espacio para explorar, entender y seguir construyendo nuestros prototipos.</p><span class="outline-tag">DISEÑO EN DESARROLLO</span></div>
+  <div class="sidebar-bottom"><span class="avatar">L</span><div>Laboratorio CAD<small>Biblioteca del proyecto</small></div><span class="version">v1.0</span></div>
+</aside>
+<main>
+  <header class="topbar"><div class="breadcrumbs">Biblioteca <span>/</span> <strong>Modelos CAD</strong></div><div class="library-status"><i></i> 3 modelos disponibles</div></header>
+  <section class="page-heading"><div><div class="eyebrow">EXPLORADOR DE PROTOTIPOS <span>/</span> <span id="model-number">01</span></div><h1 id="title">Carrito de relevamiento</h1><p id="subtitle"></p></div><span class="status-pill"><i></i> Prototipo conceptual</span></section>
+  <div class="content-grid">
+    <section class="model-column" aria-label="Vista del modelo">
+      <div class="viewer-card" id="viewer-card">
+        <div class="viewer-top"><div class="viewer-label"><span class="cube-icon">◇</span> VISOR 3D <span class="live-dot"></span></div><div class="view-controls"><label class="sr-only" for="view">Orientación</label><select id="view"><option value="iso">Perspectiva</option><option value="front">Frontal</option><option value="side">Lateral</option><option value="top">Superior</option></select><button class="icon-button" id="fullscreen" title="Pantalla completa" aria-label="Pantalla completa"></button></div></div>
+        <div class="canvas-area" id="canvas-area"><canvas id="scene" aria-label="Modelo 3D interactivo. Arrastrá para girar y usá la rueda para acercar."></canvas><div class="loading" id="loading"><span class="spinner"></span> Cargando geometría…</div><div id="viewer-error" class="viewer-error" hidden><strong>No se pudo abrir el visor.</strong><p id="error-text"></p><button id="retry">Volver a intentar</button></div></div>
+        <div class="viewer-badges"><span id="part-count">— piezas</span><span>Modelo real de FreeCAD</span></div>
+        <div class="viewer-tools"><button class="tool-button active" id="solid" aria-pressed="true">Sólido</button><button class="tool-button" id="wire" aria-pressed="false">Malla</button><span class="tool-divider"></span><button class="tool-button" id="explode" aria-pressed="false">Despiece</button><button class="icon-button" id="rotate" title="Rotación automática" aria-label="Rotación automática" aria-pressed="false"></button><button class="icon-button" id="reset" title="Restablecer vista" aria-label="Restablecer vista"></button></div>
+        <div class="viewer-bottom"><span><span class="mouse-icon">↔</span> Arrastrá para girar <b>·</b> Rueda para acercar</span><span class="axis-label"><i>X</i><i>Y</i><i>Z</i></span></div>
+        <div class="selected-part" id="selected-part" hidden><span id="selected-name"></span><button id="clear-selection" aria-label="Quitar selección">×</button></div>
+      </div>
+      <div class="dimension-cards" id="dimensions"></div>
+      <section class="overview-card"><div class="section-eyebrow">EL MODELO, EN CONTEXTO</div><h2 id="overview-title"></h2><p id="overview-text"></p><div class="feature-row" id="features"></div></section>
+    </section>
+    <aside class="detail-panel" aria-label="Información del modelo"><div class="panel-heading"><h2>Ficha del modelo</h2><span id="model-code"></span></div><div class="tabs" role="tablist" aria-label="Ficha"><button role="tab" aria-selected="true" aria-controls="tab-info" id="info-tab" data-tab="info">Información</button><button role="tab" aria-selected="false" aria-controls="tab-parts" id="parts-tab" data-tab="parts">Piezas <span id="parts-total"></span></button><button role="tab" aria-selected="false" aria-controls="tab-files" id="files-tab" data-tab="files">Archivos</button></div>
+      <div class="tab-content" role="tabpanel" aria-labelledby="info-tab" id="tab-info"><div class="section-eyebrow">ESPECIFICACIONES</div><dl id="specs"></dl><div class="material-note" id="material-note"></div><div class="development-note"><span>↗</span><div><strong>En desarrollo</strong><p id="pending"></p></div></div><div class="source-line"><span>Origen</span><strong>FreeCAD · milímetros</strong></div></div>
+      <div class="tab-content" role="tabpanel" aria-labelledby="parts-tab" id="tab-parts" hidden><label class="part-search"><span>⌕</span><input id="part-search" placeholder="Buscar una pieza…" type="search"></label><p class="panel-hint">Seleccioná una pieza para ubicarla. El ojo permite ocultarla.</p><div id="parts-list"></div><p id="no-parts" hidden>No hay piezas que coincidan.</p><button class="show-all" id="show-all">Mostrar todas las piezas</button></div>
+      <div class="tab-content" role="tabpanel" aria-labelledby="files-tab" id="tab-files" hidden><div class="section-eyebrow">ARCHIVOS DEL PROYECTO</div><p class="panel-hint">Descargá el CAD editable o la geometría para renderizar en Blender.</p><div id="downloads"></div><div class="download-note">Los modelos se muestran en su versión exportada. Los cambios posteriores en FreeCAD requieren actualizar esta biblioteca.</div></div>
+      <a class="primary-download" id="main-download" download><span class="download-icon">↓</span><div>Descargar modelo<small>FreeCAD · archivo editable</small></div><span>↗</span></a>
+    </aside>
+  </div>
+  <footer><span><i></i> Geometría real. Diseño en evolución.</span><span>Biblioteca de prototipos · Octubre 2026</span></footer>
+</main>
+<script type="module" src="./app.js"></script>
+</body></html>
