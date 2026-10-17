@@ -21,7 +21,7 @@ const models = {
     features:['3 celulares de sensores','2 cámaras superiores','Batería central'],
     specs:[['Chasis','640 × 400 × 18 mm'],['Eje principal','Ø 12 × 590 mm'],['Ruedas principales','2 × Ø 200 × 50 mm'],['Rueda trasera','Ø 125 × 32 mm'],['Separación entre centros','500 mm'],['Eje a pivote trasero','550 mm'],['Mástil provisional','Ø 28,6 × 820 mm'],['Barra superior','420 mm']],
     materialTitle:'Estructura conceptual',material:'El espesor de 18 mm viene de la placa de fenólico original. El material y la sección del bastidor definitivo siguen pendientes.',
-    pending:'Faltan el manillar tipo asa, el mecanismo telescópico y la caja electrónica. La versión de ruedas de 320 mm aún no está aplicada.',
+    pending:'Siguen el manillar tipo asa, el mecanismo telescópico y la caja electrónica. Está prevista una versión con ruedas de 320 mm.',
     cad:'CarroVeredas.FCStd',cadLabel:'Proyecto editable del carrito',obj:'carrito-obj.zip'
   },
   carcasa: {
@@ -33,7 +33,7 @@ const models = {
     features:['Montaje orientable','Paso de carga','Marco desmontable'],
     specs:[['Medida exterior','100 × 208 × 23 mm'],['Espesor de pared','3 mm'],['Celular de referencia','75 × 160 × 9 mm'],['Ancho objetivo del celular','65–85 mm'],['Largo objetivo del celular','140–180 mm'],['Espesor objetivo','7–14 mm'],['Tubo de referencia','Ø 19 mm'],['Abrazadera sin suplemento','Para tubo Ø 22 mm']],
     materialTitle:'Montaje modular',material:'El teléfono y el tubo son referencias de tamaño. El rango de ajuste es un objetivo de diseño; requiere comprobar cada equipo y detallar las guías.',
-    pending:'Falta definir cierres, bloqueo de mordazas, apriete de la rótula y material de fabricación. No es una carcasa estanca.',
+    pending:'Siguen la definición de cierres, el bloqueo de mordazas, el apriete de la rótula y el material de fabricación, con una variante estanca como objetivo.',
     cad:'PrototipoCarcasasCelulares.FCStd',cadLabel:'Proyecto de carcasa + portapowerbank',obj:'carcasa-obj.zip'
   },
   powerbank: {
@@ -45,7 +45,7 @@ const models = {
     features:['Módulo independiente','Dos retenes','Abrazadera para tubo'],
     specs:[['Soporte exterior','86 × 162 × 33 mm'],['Espacio interior','80 × 156 × 30 mm'],['Batería de referencia','75 × 150 × 25 mm'],['Espesor de pared','3 mm'],['Retenes superiores','2 × 86 × 12 × 3 mm'],['Salida de cable','46 × 24 mm'],['Montaje en tubo','Ø 19–22 mm'],['Autonomía deseada','24 horas · por validar']],
     materialTitle:'Volumen de referencia',material:'El powerbank mostrado representa espacio físico; no corresponde a una capacidad ni a un producto comercial elegido.',
-    pending:'Hay que medir el consumo real del teléfono y elegir la batería. Las 24 horas son un objetivo, no una autonomía garantizada.',
+    pending:'Sigue la medición del consumo real del teléfono para elegir la batería definitiva. Las 24 horas son el objetivo de autonomía de diseño.',
     cad:'PrototipoCarcasasCelulares.FCStd',cadLabel:'Proyecto de carcasa + portapowerbank',obj:'powerbank-obj.zip'
   }
 };
