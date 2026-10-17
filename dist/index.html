@@ -2,23 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Explorá los prototipos CAD del proyecto: Caminante (carrito de relevamiento), Kit (carcasa para celular) y Batería (portapowerbank). Modelos 3D, piezas, medidas y descargas.">
+  <meta name="description" content="Explorá Caminante, Kit y Batería en 3D, y consultá el modelo matemático y los costos del informe de Caminito.">
   <meta name="theme-color" content="#171d20"><title>Caminito — Cada paso cuenta</title>
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./modelo-integrado.css">
+  <link rel="stylesheet" href="./costos.css">
   <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
 </head>
 <body>
 <aside class="sidebar">
   <a class="brand" href="./" aria-label="Caminito, inicio"><span class="brand-symbol"><img src="./logo.svg" alt="" width="40" height="40"></span><div>Caminito<span>Con Caminito, cada paso es más seguro</span></div></a>
   <div class="workspace-label"><span class="workspace-dot"></span> Caminito</div>
-  <a class="prototype-entry" href="./prototipo">↗ Probar Caminito <span>Demo interactiva</span></a>
-  <div class="nav-caption">BIBLIOTECA <span>03</span></div>
-  <nav id="catalog" aria-label="Modelos CAD"></nav>
+  <div class="nav-caption">BIBLIOTECA <span>05</span></div>
+  <nav id="catalog" aria-label="Biblioteca de Caminito"></nav>
   <div class="sidebar-note"><span class="small-cross">✳</span><h3>Ideas que toman forma.</h3><p>Un espacio para explorar, entender y seguir construyendo nuestros prototipos.</p><span class="outline-tag">DISEÑO EN DESARROLLO</span></div>
   <div class="sidebar-bottom"><span class="avatar">C</span><div>Caminito<small>Biblioteca del proyecto</small></div><span class="version">v1.0</span></div>
 </aside>
 <main>
-  <header class="topbar"><div class="breadcrumbs">Biblioteca <span>/</span> <strong>Modelos CAD</strong></div><div class="library-status"><i></i> 3 modelos disponibles</div></header>
+  <header class="topbar"><div class="breadcrumbs">Biblioteca <span>/</span> <strong id="breadcrumb-current">Modelos CAD</strong></div><div class="library-status"><i></i> 5 recursos disponibles</div></header>
+  <div id="cad-view">
   <section class="page-heading"><div><div class="eyebrow">EXPLORADOR DE PROTOTIPOS <span>/</span> <span id="model-number">01</span></div><h1 id="title">Carrito de relevamiento</h1><p id="subtitle"></p></div><span class="status-pill"><i></i> Prototipo conceptual</span></section>
   <div class="content-grid">
     <section class="model-column" aria-label="Vista del modelo">
@@ -40,7 +42,10 @@
       <a class="primary-download" id="main-download" download><span class="download-icon">↓</span><div>Descargar modelo<small>FreeCAD · archivo editable</small></div><span>↗</span></a>
     </aside>
   </div>
-  <footer><span><i></i> Geometría real. Diseño en evolución.</span><span>Biblioteca de prototipos · Octubre 2026</span></footer>
+  </div>
+  <section id="math-view" class="math-view" aria-label="Modelo matemático y uso de los datos" hidden><p class="math-loading">Cargando el modelo matemático…</p></section>
+  <section id="cost-view" class="cost-view" aria-label="Costos de Caminante" hidden><p class="cost-loading">Cargando los costos…</p></section>
+  <footer><span><i></i> Caminito. Diseño en evolución.</span><span>Biblioteca del proyecto · Octubre 2026</span></footer>
 </main>
 <script type="module" src="./app.js"></script>
 </body></html>

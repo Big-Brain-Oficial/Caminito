@@ -6,11 +6,13 @@ const icons = {
   car:'<path d="M6 20 19 17 12 10 6 20Zm0 0 12-2M12 10l-2-7m-3 1 6-2m-3 3 5 2"/><circle cx="5" cy="20" r="3"/><circle cx="19" cy="18" r="2.5"/><circle cx="13" cy="10" r="2"/>',
   case:'<rect x="6" y="2" width="13" height="21" rx="2"/><path d="M8 5h9v14H8zM11 21h3M19 10h3v7h-3"/>',
   battery:'<rect x="3" y="5" width="20" height="15" rx="2"/><path d="M8 5v15m10-15v15m-5-10-3 5h4l-2 4M9 2h7"/>',
+  math:'<path d="M3 7h20M7 3v20m6-12 7 8m0-8-7 8"/><circle cx="18" cy="5" r="2"/>',
+  costs:'<rect x="5" y="2" width="16" height="22" rx="2"/><path d="M8 7h10M8 11h10M8 15h4m4 0h2M8 20h10"/>',
   fullscreen:'<path d="M2 6V2h4m4 0h4v4m0 4v4h-4m-4 0H2v-4"/>',
   rotate:'<path d="M13 5a5 5 0 1 0 0 6M13 1v4H9"/>',
   reset:'<path d="M3 5a5 5 0 1 1-1 5M3 1v4h4"/>'
 };
-const svg = name => `<svg viewBox="0 0 ${['car','case','battery'].includes(name)?26:16} ${['car','case','battery'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
+const svg = name => `<svg viewBox="0 0 ${['car','case','battery','math','costs'].includes(name)?26:16} ${['car','case','battery','math','costs'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
 const models = {
   carrito: {
     title:'Caminante',short:'Caminante',category:'Movilidad · Relevamiento',icon:'car',number:'01',code:'CM–001',
@@ -60,6 +62,16 @@ for (const [key,m] of Object.entries(models)) {
   button.onclick = () => { location.hash = key; };
   $('catalog').append(button);
 }
+const mathButton=document.createElement('button');
+mathButton.className='model-link';mathButton.dataset.model='modelo';
+mathButton.innerHTML=`<span class="nav-model-icon">${svg('math')}</span><span><strong>Modelo matemático</strong><small>Informe · Ecuaciones</small></span><span class="nav-arrow">↗</span>`;
+mathButton.onclick=()=>{location.hash='modelo';};
+$('catalog').append(mathButton);
+const costsButton=document.createElement('button');
+costsButton.className='model-link';costsButton.dataset.model='costos';
+costsButton.innerHTML=`<span class="nav-model-icon">${svg('costs')}</span><span><strong>Costos</strong><small>Informe · Materiales</small></span><span class="nav-arrow">↗</span>`;
+costsButton.onclick=()=>{location.hash='costos';};
+$('catalog').append(costsButton);
 for (const id of ['fullscreen','rotate','reset']) $(id).innerHTML = svg(id);
 
 function initViewer() {
@@ -216,8 +228,43 @@ function fillInformation(key){
   $('main-download').href='./downloads/'+m.cad;
   $('downloads').innerHTML=`<a class="file-link" href="./downloads/${m.cad}" download><span class="file-ext">CAD</span><div><strong>FreeCAD editable</strong><small>${m.cadLabel}</small></div><span>↓</span></a><a class="file-link" href="./downloads/${m.obj}" download><span class="file-ext">OBJ</span><div><strong>Modelo para Blender</strong><small>ZIP · geometría + materiales · metros</small></div><span>↓</span></a>`;
 }
+const informationViews={
+  modelo:{id:'math-view',title:'Modelo matemático',file:'./modelo-fragmento.html',script:'./modelo.js'},
+  costos:{id:'cost-view',title:'Costos',file:'./costos-fragmento.html',script:'./costos.js'}
+};
+const informationPromises=new Map();
+async function showInformation(key){
+  const page=informationViews[key];
+  currentKey=key;++requestNumber;
+  $('cad-view').hidden=true;
+  for(const item of Object.values(informationViews))$(item.id).hidden=item.id!==page.id;
+  $('breadcrumb-current').textContent=page.title;
+  document.title=page.title+' — Caminito';
+  for(const button of document.querySelectorAll('[data-model]')){
+    const active=button.dataset.model===key;
+    button.classList.toggle('active',active);
+    if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
+  }
+  if(!informationPromises.has(key)){
+    const promise=(async()=>{
+      const response=await fetch(page.file);
+      if(!response.ok)throw new Error('No se pudo cargar el contenido del informe.');
+      $(page.id).innerHTML=await response.text();
+      await import(page.script);
+    })().catch(error=>{
+      informationPromises.delete(key);
+      $(page.id).textContent=error.message;
+    });
+    informationPromises.set(key,promise);
+  }
+  await informationPromises.get(key);
+}
 async function loadModel(key){
+  if(informationViews[key]){await showInformation(key);return;}
   if(!models[key])key='carrito';
+  $('cad-view').hidden=false;
+  for(const item of Object.values(informationViews))$(item.id).hidden=true;
+  $('breadcrumb-current').textContent='Modelos CAD';
   currentKey=key;const request=++requestNumber;fillInformation(key);setTab('info');
   $('part-search').value='';$('selected-part').hidden=true;$('viewer-error').hidden=true;$('loading').hidden=false;
   $('part-count').textContent='Cargando…';$('parts-total').textContent='';

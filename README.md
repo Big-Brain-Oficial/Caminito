@@ -24,7 +24,7 @@ Exportar su geometria con el mismo esquema JSON y agregar una ficha al objeto `m
 
 ## Prototipo interactivo de Caminito
 
-La sección `/prototipo` (o `/prototipo.html` con el servidor HTTP local) muestra una demo completamente simulada, separada del visor CAD. Se accede desde “Probar Caminito” en la biblioteca.
+La sección `/prototipo` (o `/prototipo.html` con el servidor HTTP local) muestra una demo completamente simulada, separada del visor CAD. No aparece en el menú de la biblioteca.
 
 - **Mi recorrido:** preferencias, tres alternativas sobre un mapa SVG ilustrativo, origen y estado de los registros, capas, zoom y un recorrido guiado con avance manual.
 - **Comunidad:** avisos de ejemplo, confirmaciones y reportes locales con fotografía opcional. Los aportes se mantienen solo en memoria y se eliminan al recargar. No se envían reclamos ni archivos.
@@ -41,3 +41,9 @@ Archivos de esta sección: `dist/prototipo.html`, `dist/prototipo.css` y `dist/p
 El visor permite rotar, acercar, cambiar vistas, mostrar malla y despiece ilustrativo, seleccionar piezas, buscar y ocultar componentes. No modifica CAD. Las fichas y archivos son una captura exportada del proyecto y no se sincronizan automaticamente con FreeCAD.
 
 Las carcasas y mecanismos son prototipos conceptuales. El ajuste universal, los cierres, materiales y autonomia de bateria requieren definicion y validacion.
+
+## Modelo matemático del informe
+
+La cuarta opción de la biblioteca (`#modelo`) presenta el apartado 3 2 de `Caminito_Informe_Rally.docx` dentro de la página principal. El contenido está en `dist/modelo-fragmento.html`; los controles de `dist/modelo.js` calculan ejemplos ilustrativos del filtro complementario, las pendientes y la profundidad estéreo. No representan mediciones reales ni cambian el modelo del informe. La copia en `dist/downloads/Caminito_Informe_Rally.docx` permite descargar el documento original desde la web.
+
+La quinta opción (`#costos`) presenta el apartado 3 3 de viabilidad económica, incluida su tabla de ocho rubros y las aclaraciones sobre el alcance del subtotal. `dist/costos.js` permite comparar los extremos mínimo y máximo sin modificar los importes del informe.

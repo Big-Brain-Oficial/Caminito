@@ -1,0 +1,69 @@
+.sidebar{overflow-y:auto}
+.math-view{padding:0 0 20px;color:var(--ink)}
+.math-view *{box-sizing:border-box}
+.math-view h1,.math-view h2,.math-view h3{font-family:Manrope,sans-serif;letter-spacing:-.035em}
+.math-view p{line-height:1.75}
+.math-intro{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:31px 0 26px}
+.math-eyebrow{font-size:9.5px;font-weight:600;letter-spacing:1.7px;color:#859080;margin:0}
+.math-intro h1{font-size:clamp(25px,2.4vw,36px);line-height:1.3;margin:10px 0 8px}
+.math-intro-copy>p:not(.math-eyebrow){max-width:700px;font-size:12.5px;color:#7e857a;margin:0;line-height:1.6}
+.math-intro>a{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:10px 14px;border:1px solid #d5dccf;border-radius:5px;background:#f0f2ea;color:#4b634a;font-size:11px;font-weight:600;text-decoration:none}
+.math-intro>a:hover{background:#e8eee1}
+.math-view .report-section{background:#fcfcfa;border:1px solid var(--line);border-radius:9px;padding:clamp(18px,2.6vw,30px)}
+.math-view .section-topline{display:flex;justify-content:space-between;gap:15px;color:#8c967f;font-size:9.5px;font-weight:600;letter-spacing:1.35px;margin-bottom:12px}
+.math-view .report-section h2{font-size:clamp(19px,2vw,24px);line-height:1.35;margin:0 0 9px}
+.math-view .section-lead{color:#808876;font-size:12.5px;margin:0 0 12px;max-width:780px}
+.math-view .report-block{padding:22px 0 8px;border-top:1px solid #e9ecdf;margin-top:20px}
+.math-view .report-block h3{font-size:16px;line-height:1.4;margin:10px 0 11px}
+.math-view .report-block p{font-size:12.5px;color:#697567;max-width:840px;margin:0 0 13px}
+.math-view .block-label{display:flex;align-items:center;gap:8px;color:#8c967f;font-size:9px;letter-spacing:1.25px;font-weight:600}
+.math-view .block-number,.math-view .lab-index{display:grid;place-items:center;flex:none;width:31px;height:31px;border-radius:5px;background:#edf0e6;color:#75876c;font-size:10px;letter-spacing:0}
+.math-view .equation{display:flex;align-items:center;justify-content:center;gap:20px;overflow-x:auto;white-space:nowrap;background:#f0f2ea;border:1px solid #e2e6da;border-radius:6px;color:#42583e;font:650 clamp(17px,2.1vw,25px) Manrope,sans-serif;padding:19px 14px;margin:18px 0}
+.math-view .equation.paired{flex-wrap:wrap;justify-content:space-evenly}
+.math-view .equation sub{font-size:.58em}
+.math-view .fraction{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.84em;margin-left:.16em;line-height:1.15}
+.math-view .fraction>span:first-child{border-bottom:2px solid currentColor;padding:0 .2em .13em}
+.math-view .fraction>span:last-child{padding-top:.13em}
+.math-view .references{font-size:11px!important;color:#8c9680!important}
+.math-view .references a{text-decoration:underline;text-underline-offset:3px}
+.math-view .lab{margin-top:28px}
+.math-view .lab>.section-topline{border-top:1px solid var(--line);padding-top:18px;margin-bottom:8px}
+.math-view .lab h2{font-size:clamp(19px,2vw,25px);line-height:1.35;margin:0 0 8px}
+.math-view .lab h2 em{font-style:normal;color:#667e5c}
+.math-view .lab>.section-lead{font-size:12.5px;color:#808876;max-width:830px;margin-bottom:18px}
+.math-view .lab-card{background:#fcfcfa;border:1px solid var(--line);border-radius:9px;padding:clamp(18px,2.5vw,27px);margin:14px 0}
+.math-view .lab-heading{display:flex;align-items:flex-start;gap:10px}
+.math-view .lab-heading .eyebrow{font-size:9.5px;color:#8c967f;letter-spacing:1.35px;margin:2px 0 6px}
+.math-view .lab-heading h3{font-size:16px;line-height:1.35;margin:0}
+.math-view .headline-output{margin-left:auto;color:#4b634a;font:650 clamp(21px,2.2vw,28px) Manrope,sans-serif;white-space:nowrap}
+.math-view .headline-output small{font-size:.43em;color:#8c9680}
+.math-view .lab-description{font-size:12.5px;color:#808876;margin:16px 0 20px;max-width:760px}
+.math-view .control-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.math-view .control{display:block;min-width:0}
+.math-view .control.full{grid-column:1/-1}
+.math-view .control>span{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#66775a;font-weight:550}
+.math-view .control output{color:#be7656;white-space:nowrap}
+.math-view .control input{display:block;width:100%;margin-top:10px;accent-color:#ed7048;cursor:pointer}
+.math-view .math-trace{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;background:#f4f6ef;border:1px solid #e7ebdf;border-radius:5px;padding:13px 14px;margin-top:20px}
+.math-view .math-trace span{color:#8c9680;font-size:10px;font-weight:600}
+.math-view .math-trace code{font:550 11px Manrope,sans-serif;color:#4a6247;overflow-wrap:anywhere}
+.math-view .slope-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(210px,.7fr);gap:16px}
+.math-view .slope-diagram,.math-view .stereo-visual{background:#f0f2ea;border:1px solid #e2e6da;border-radius:6px;overflow:hidden}
+.math-view .slope-diagram svg,.math-view .stereo-visual svg{display:block;width:100%}
+.math-view .slope-diagram span,.math-view .stereo-visual span{display:block;padding:0 12px 12px;font-size:9px;color:#9aa48f}
+.math-view .slope-diagram text,.math-view .stereo-visual text{font:600 9px Manrope,sans-serif;letter-spacing:.1em;fill:#84937d}
+.math-view .slope-values{display:flex;flex-direction:column;gap:10px}
+.math-view .slope-values>div{background:#f4f6ef;border:1px solid #e7ebdf;border-radius:5px;padding:12px}
+.math-view .slope-values>div span{display:block;color:#8c9680;font-size:10px}
+.math-view .slope-values>div strong{display:block;color:#4b634a;font:650 21px Manrope,sans-serif}
+.math-view .slope-values label{margin-top:auto}
+.math-view .stereo-controls{margin-top:18px}
+.math-view .caution{font-size:11px;color:#978666;border-left:3px solid #d8af77;padding-left:10px;margin:16px 0 0}
+.math-view .end-card{margin-top:20px;background:#f4f1e5;border:1px solid #ece6d4;border-radius:5px;padding:20px}
+.math-view .end-card>span{color:#8d7b52;font-size:9.5px;letter-spacing:1.25px;font-weight:600}
+.math-view .end-card p{color:#80755e;font-size:12px;max-width:700px;margin:9px 0 12px}
+.math-view .end-card a{font-size:11px;font-weight:600;color:#566d4d;text-decoration:underline;text-underline-offset:3px}
+.math-view .end-card a span{color:inherit;font-size:13px}
+.math-loading{padding:35px;color:#8c9680;font-size:12px}
+@media(max-width:950px){.math-view .slope-layout{grid-template-columns:1fr}.math-view .slope-values{display:grid;grid-template-columns:1fr 1fr}.math-view .slope-values label{grid-column:1/-1}}
+@media(max-width:640px){#catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.model-link{min-height:49px}.math-intro{align-items:flex-start;flex-direction:column;padding:23px 0 21px;gap:14px}.math-intro h1{font-size:27px}.math-intro-copy>p:not(.math-eyebrow){font-size:11.5px}.math-view .report-section{padding:17px}.math-view .control-grid,.math-view .slope-values{grid-template-columns:1fr}.math-view .control.full,.math-view .slope-values label{grid-column:auto}.math-view .equation{justify-content:flex-start}.math-view .equation.paired{align-items:flex-start;flex-direction:column}.math-view .lab-heading{flex-wrap:wrap}.math-view .headline-output{width:100%;margin-left:41px}.math-view .math-trace code{display:block;margin-top:3px}}

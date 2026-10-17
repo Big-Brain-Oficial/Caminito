@@ -1,0 +1,62 @@
+<div class="math-intro"><div class="math-intro-copy"><p class="math-eyebrow">INFORME DE CAMINITO · RALLY 2026</p><h1>Modelo matemático</h1><p>Consultá el apartado del informe y explorá sus ecuaciones con ejemplos interactivos. El texto y las fórmulas originales se mantienen íntegros.</p></div><a href="./downloads/Caminito_Informe_Rally.docx" download>Descargar informe original ↗</a></div>
+<section class="report-section" id="informe" aria-labelledby="report-title">
+          <div class="section-topline"><span>DOCUMENTO ORIGINAL</span><span>APARTADO 3 2</span></div>
+          <h2 id="report-title">3 2 Modelo matemático y uso de los datos</h2>
+          <p class="section-lead">Transcripción del apartado del informe. Las ecuaciones y el texto se mantienen como en el documento.</p>
+
+          <article class="report-block" id="orientacion" aria-labelledby="orientation-title">
+            <div class="block-label"><span class="block-number">01</span><span>SENSORES DE MOVIMIENTO</span></div>
+            <h3 id="orientation-title">Inclinación con acelerómetro y giroscopio</h3>
+            <p>Tras calibrar en horizontal, la gravedad aportará una referencia de orientación y el giroscopio sus cambios [2]. Como aproximación por eje para pequeños giros, el filtro complementario combinará ambas señales:</p>
+            <div class="equation" role="math" aria-label="theta sub t igual a alfa por theta sub t menos uno más omega sub t por delta t, más uno menos alfa por theta sub a coma t"><span>θ<sub>t</sub> = α [θ<sub>t−1</sub> + ω<sub>t</sub> Δt] + (1 − α) θ<sub>a,t</sub></span></div>
+            <p>θ: ángulo estimado; ω: velocidad angular corregida (rad/s); Δt: segundos entre muestras; θ<sub>a</sub>: ángulo de la gravedad; α: peso entre 0 y 1. Se identificarán golpes, pérdidas y aceleraciones que alteren la referencia.</p>
+            <div class="equation paired" role="math" aria-label="P sub L igual a cien por tangente de theta; P sub T igual a cien por tangente de fi"><span>P<sub>L</sub> = 100 · tan(θ)</span><span>P<sub>T</sub> = 100 · tan(φ)</span></div>
+            <p>Con ángulos longitudinal y lateral en radianes, se obtiene pendiente en porcentaje. En Caminante corresponde al <strong>plano del chasis entre sus tres apoyos</strong>; se contrastará con la vereda.</p>
+          </article>
+
+          <article class="report-block" id="profundidad" aria-labelledby="depth-title">
+            <div class="block-label"><span class="block-number">02</span><span>CÁMARAS</span></div>
+            <h3 id="depth-title">Cámaras y reconocimiento de barreras</h3>
+            <p>Dos cámaras fijas, calibradas y con capturas compatibles observarán un sector común. La disparidad de un mismo punto permitirá estimar profundidad [1]:</p>
+            <div class="equation" role="math" aria-label="Z igual a f por B dividido por d"><span>Z = <span class="fraction"><span>f · B</span><span>d</span></span></span></div>
+            <p>f: focal en píxeles; B: separación entre cámaras en metros; d: disparidad válida en píxeles; Z: profundidad en metros. Un plano de suelo permitirá estimar salientes o depresiones. Si falta confianza, la dimensión quedará desconocida y la foto servirá como evidencia.</p>
+            <p>La segmentación se ajustará con fotos locales etiquetadas [3]. Tipo de barrera, medidas válidas, ubicación y evidencia alimentarán Caminito. Android nativo capturará sensores; Python/OpenCV y PyTorch procesarán datos; API/PostGIS y MapLibre/OpenStreetMap sostendrán registros y mapa. El procesamiento exigente se prevé en servidor.</p>
+            <p class="references" id="fuentes">[1] <a href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener noreferrer">OpenCV: estéreo</a>. [2] <a href="https://developer.android.com/develop/sensors-and-location/sensors/sensors_motion" target="_blank" rel="noopener noreferrer">Android: movimiento</a>. [3] <a href="https://docs.pytorch.org/tutorials/intermediate/torchvision_tutorial.html" target="_blank" rel="noopener noreferrer">PyTorch: segmentación</a>.</p>
+          </article>
+        </section>
+
+        <section class="lab" id="pendiente" aria-labelledby="lab-title">
+          <div class="section-topline"><span>EXPLORADOR INTERACTIVO</span><span>DATOS DE EJEMPLO</span></div>
+          <h2 id="lab-title">Mové las variables.<br><em>Observá la relación.</em></h2>
+          <p class="section-lead">Cada módulo evalúa las ecuaciones reproducidas arriba con valores elegidos por vos. Son ejemplos matemáticos ilustrativos; no son registros capturados por Caminante ni determinan la accesibilidad de una vereda.</p>
+
+          <article class="lab-card" aria-labelledby="filter-title">
+            <div class="lab-heading"><span class="lab-index">01</span><div><p class="eyebrow">ACELERÓMETRO + GIROSCOPIO</p><h3 id="filter-title">Orientación estimada</h3></div><output id="theta-output" class="headline-output" aria-live="off">0,0504 <small>rad</small></output></div>
+            <p class="lab-description">El filtro combina el cambio registrado por el giroscopio con el ángulo de referencia de la gravedad.</p>
+            <div class="control-grid">
+              <label class="control"><span>θ<sub>t−1</sub> · ángulo anterior <output for="theta-prev" id="theta-prev-value"></output></span><input id="theta-prev" type="range" min="-0.2" max="0.2" value="0.04" step="0.005"></label>
+              <label class="control"><span>ω<sub>t</sub> · velocidad angular <output for="omega" id="omega-value"></output></span><input id="omega" type="range" min="-0.5" max="0.5" value="0.08" step="0.01"></label>
+              <label class="control"><span>Δt · tiempo entre muestras <output for="delta-t" id="delta-t-value"></output></span><input id="delta-t" type="range" min="0.01" max="0.5" value="0.1" step="0.01"></label>
+              <label class="control"><span>θ<sub>a,t</sub> · referencia de gravedad <output for="theta-a" id="theta-a-value"></output></span><input id="theta-a" type="range" min="-0.2" max="0.2" value="0.06" step="0.005"></label>
+              <label class="control full"><span>α · peso entre 0 y 1 <output for="alpha" id="alpha-value"></output></span><input id="alpha" type="range" min="0" max="1" value="0.8" step="0.01"></label>
+            </div>
+            <div class="math-trace" aria-live="polite"><span>Aplicación de la ecuación</span><code id="filter-trace"></code></div>
+          </article>
+
+          <article class="lab-card" aria-labelledby="slope-title">
+            <div class="lab-heading"><span class="lab-index">02</span><div><p class="eyebrow">PLANO DEL CHASIS</p><h3 id="slope-title">Pendiente en porcentaje</h3></div></div>
+            <p class="lab-description">θ toma el resultado del filtro anterior. Ajustá φ para explorar la pendiente lateral.</p>
+            <div class="slope-layout"><div class="slope-diagram" aria-hidden="true"><svg viewBox="0 0 400 220"><defs><pattern id="slope-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#c9d3c8"/></pattern></defs><rect width="400" height="220" fill="url(#slope-dots)"/><path d="M27 176H375" stroke="#bbc9ba" stroke-width="2" stroke-dasharray="6 7"/><path id="slope-line" d="M40 170 L355 145" stroke="#e78b62" stroke-width="8" stroke-linecap="round"/><circle cx="40" cy="170" r="10" fill="#e78b62"/><circle id="slope-end" cx="355" cy="145" r="10" fill="#e78b62"/><text x="29" y="204">PLANO DE REFERENCIA</text></svg><span>Esquema ilustrativo · no representa una vereda medida</span></div><div class="slope-values"><div><span>P<sub>L</sub> · longitudinal</span><strong id="slope-l">—</strong></div><div><span>P<sub>T</sub> · lateral</span><strong id="slope-t">—</strong></div><label class="control"><span>φ · ángulo lateral <output for="phi" id="phi-value"></output></span><input id="phi" type="range" min="-0.2" max="0.2" value="0.03" step="0.005"></label></div></div>
+            <div class="math-trace"><span>Aplicación de las ecuaciones</span><code id="slope-trace"></code></div>
+          </article>
+
+          <article class="lab-card" aria-labelledby="stereo-title">
+            <div class="lab-heading"><span class="lab-index">03</span><div><p class="eyebrow">DOS CÁMARAS</p><h3 id="stereo-title">Profundidad estimada</h3></div><output id="depth-output" class="headline-output" aria-live="off">2,00 <small>m</small></output></div>
+            <p class="lab-description">Una disparidad válida mayor reduce la profundidad estimada cuando la focal y la separación son las mismas.</p>
+            <div class="stereo-visual" aria-hidden="true"><svg viewBox="0 0 600 210"><defs><pattern id="stereo-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#dce7dc"/></pattern></defs><rect width="600" height="210" fill="url(#stereo-grid)"/><path id="left-ray" d="M140 170 L300 60" stroke="#6f9a87" stroke-width="2" stroke-dasharray="5 5"/><path id="right-ray" d="M460 170 L300 60" stroke="#6f9a87" stroke-width="2" stroke-dasharray="5 5"/><path d="M140 170H460" stroke="#98aa9e" stroke-width="2"/><circle cx="140" cy="170" r="17" fill="#21483d"/><circle cx="460" cy="170" r="17" fill="#21483d"/><path d="M133 170h14m-7-7v14M453 170h14m-7-7v14" stroke="white" stroke-width="2"/><circle id="depth-point" cx="300" cy="60" r="11" fill="#e78b62"/><text x="300" y="193" text-anchor="middle">B · separación</text><text id="depth-label" x="315" y="50">Z</text></svg><span>Geometría ilustrativa · no es una reconstrucción de cámara</span></div>
+            <div class="control-grid stereo-controls"><label class="control"><span>f · focal <output for="focal" id="focal-value"></output></span><input id="focal" type="range" min="400" max="1400" value="800" step="10"></label><label class="control"><span>B · separación <output for="baseline" id="baseline-value"></output></span><input id="baseline" type="range" min="0.04" max="0.3" value="0.12" step="0.01"></label><label class="control full"><span>d · disparidad válida <output for="disparity" id="disparity-value"></output></span><input id="disparity" type="range" min="5" max="160" value="48" step="1"></label></div>
+            <div class="math-trace"><span>Aplicación de la ecuación</span><code id="depth-trace"></code></div>
+            <p class="caution">Según el informe, si falta confianza, la dimensión queda desconocida y la foto sirve como evidencia. Este ejemplo supone una disparidad válida.</p>
+          </article>
+        </section>
+        <div class="end-card"><span>CAMINITO · INFORME ORIGINAL</span><p>Consultá el documento completo para conocer el contexto, las limitaciones previstas y la validación pendiente.</p><a href="./downloads/Caminito_Informe_Rally.docx" download>Descargar el informe .docx <span aria-hidden="true">↗</span></a></div>

@@ -1,0 +1,47 @@
+.cost-view{padding:0 0 20px;color:var(--ink)}
+.cost-view *{box-sizing:border-box}
+.cost-view h1,.cost-view h2{font-family:Manrope,sans-serif;letter-spacing:-.035em}
+.cost-view p{line-height:1.75}
+.cost-intro{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:31px 0 26px}
+.cost-eyebrow{font-size:9.5px;font-weight:600;letter-spacing:1.7px;color:#859080;margin:0}
+.cost-intro h1{font-size:clamp(25px,2.4vw,36px);line-height:1.3;margin:10px 0 8px}
+.cost-intro p:not(.cost-eyebrow){max-width:700px;color:#7e857a;font-size:12.5px;margin:0;line-height:1.6}
+.cost-intro>a{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:10px 14px;border:1px solid #d5dccf;border-radius:5px;background:#f0f2ea;color:#4b634a;font-size:11px;font-weight:600;text-decoration:none}
+.cost-intro>a:hover{background:#e8eee1}
+.cost-report,.cost-explorer{background:#fcfcfa;border:1px solid var(--line);border-radius:9px;padding:clamp(18px,2.6vw,30px)}
+.cost-section-label{display:flex;justify-content:space-between;gap:15px;color:#8c967f;font-size:9.5px;font-weight:600;letter-spacing:1.35px;margin-bottom:12px}
+.cost-report h2,.cost-explorer h2{font-size:clamp(19px,2vw,24px);line-height:1.35;margin:0 0 9px}
+.cost-report>p,.cost-explorer-head p{max-width:840px;color:#697567;font-size:12.5px;margin:0 0 20px}
+.cost-table-scroll{overflow-x:auto;border:1px solid #e2e6da;border-radius:6px}
+.cost-report table{width:100%;border-collapse:collapse;min-width:620px;text-align:left;font-size:12px}
+.cost-report th,.cost-report td{padding:13px 15px;border-bottom:1px solid #e9ecdf}
+.cost-report thead{background:#f0f2ea;color:#687861}
+.cost-report thead th{font-size:9.5px;font-weight:650;letter-spacing:.65px;text-transform:uppercase;white-space:nowrap}
+.cost-report tbody th{font-weight:500;color:#586850;max-width:570px}
+.cost-report td{text-align:right;color:#4a5742;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cost-report tfoot{background:#e8eee1;color:#3f593f}
+.cost-report tfoot th,.cost-report tfoot td{border-bottom:0;font-weight:700}
+.cost-report-notes{margin-top:18px;padding:16px 18px;background:#f4f1e5;border:1px solid #ece6d4;border-radius:5px}
+.cost-report-notes p{color:#817762;font-size:11.5px;margin:0 0 10px}
+.cost-report-notes p:last-child{margin-bottom:0}
+.cost-explorer{margin-top:18px}
+.cost-explorer-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.cost-explorer-head p{margin-bottom:18px}
+.cost-switch{display:flex;flex:none;gap:4px;padding:4px;background:#f0f2ea;border:1px solid #e2e6da;border-radius:6px}
+.cost-switch button{border:0;border-radius:4px;background:transparent;color:#7d8b75;padding:8px 12px;font-size:11px;font-weight:600}
+.cost-switch button[aria-pressed="true"]{background:#fff;color:#465e42;box-shadow:0 1px 4px #263b2519}
+.cost-summary{display:flex;justify-content:space-between;align-items:end;gap:20px;background:#25372a;color:#f2f5ed;border-radius:6px;padding:20px 22px;margin:6px 0 20px}
+.cost-summary div>span{display:block;color:#b5c7ad;font-size:9.5px;letter-spacing:1.25px;font-weight:600}
+.cost-summary output{display:block;font:650 clamp(24px,3vw,35px) Manrope,sans-serif;letter-spacing:-.035em;line-height:1.2;margin-top:6px;font-variant-numeric:tabular-nums}
+.cost-summary>span{font-size:10.5px;color:#bbcbb3;white-space:nowrap}
+.cost-bars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 27px}
+.cost-bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;color:#66775a;font-size:11px;line-height:1.5}
+.cost-bar-head span{min-width:0}
+.cost-bar-head strong{flex:none;color:#4b634a;font:650 11px Manrope,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cost-bar-track{height:8px;margin-top:8px;border-radius:99px;background:#edf0e6;overflow:hidden}
+.cost-bar-track span{display:block;height:100%;border-radius:99px;background:#8ba47d;transition:width .25s ease}
+.cost-footnote{font-size:10.5px;color:#8c9680;margin:22px 0 0;padding-top:15px;border-top:1px solid #e9ecdf}
+.cost-loading{padding:35px;color:#8c9680;font-size:12px}
+@media(max-width:950px){.cost-bars{grid-template-columns:1fr}.cost-explorer-head{flex-direction:column;gap:0}.cost-switch{margin-bottom:16px}}
+@media(max-width:640px){#catalog .model-link[data-model="costos"]{grid-column:1/-1}.cost-intro{align-items:flex-start;flex-direction:column;padding:23px 0 21px;gap:14px}.cost-intro h1{font-size:27px}.cost-intro p:not(.cost-eyebrow){font-size:11.5px}.cost-report,.cost-explorer{padding:17px}.cost-summary{align-items:flex-start;flex-direction:column;gap:8px;padding:17px}.cost-summary>span{white-space:normal}.cost-bar-head{align-items:flex-start;flex-direction:column;gap:2px}}
+@media(prefers-reduced-motion:reduce){.cost-bar-track span{transition:none}}
