@@ -22,6 +22,22 @@ Exportar su geometria con el mismo esquema JSON y agregar una ficha al objeto `m
 
 ## Alcance
 
+## Prototipo interactivo de Caminito
+
+La sección `/prototipo` (o `/prototipo.html` con el servidor HTTP local) muestra una demo completamente simulada, separada del visor CAD. Se accede desde “Probar Caminito” en la biblioteca.
+
+- **Mi recorrido:** preferencias, tres alternativas sobre un mapa SVG ilustrativo, origen y estado de los registros, capas, zoom y un recorrido guiado con avance manual.
+- **Comunidad:** avisos de ejemplo, confirmaciones y reportes locales con fotografía opcional. Los aportes se mantienen solo en memoria y se eliminan al recargar. No se envían reclamos ni archivos.
+- **Segunda vida:** tres perfiles ficticios de celulares, asignación de funciones y circuito propuesto de recuperación y préstamo. El diagnóstico no inspecciona el dispositivo.
+- **Asistente:** respuestas predefinidas para explicar la demo; no utiliza un modelo de IA ni un servicio externo.
+- **Accesibilidad:** controles por teclado, diálogos nativos, vista de alto contraste y texto ampliado, movimiento reducido e indicaciones con la síntesis de voz del navegador cuando esté disponible.
+
+No solicita geolocalización, micrófono, cámara ni sensores. No calcula rutas reales ni publica mediciones, y el mapa no debe utilizarse para navegar en la ciudad. Los únicos archivos seleccionados por la persona se muestran como vista previa local. La tipografía conserva la carga desde Google Fonts del sitio original.
+
+Archivos de esta sección: `dist/prototipo.html`, `dist/prototipo.css` y `dist/prototipo.js`. No requiere compilación ni nuevas dependencias.
+
+## Alcance del visor CAD
+
 El visor permite rotar, acercar, cambiar vistas, mostrar malla y despiece ilustrativo, seleccionar piezas, buscar y ocultar componentes. No modifica CAD. Las fichas y archivos son una captura exportada del proyecto y no se sincronizan automaticamente con FreeCAD.
 
 Las carcasas y mecanismos son prototipos conceptuales. El ajuste universal, los cierres, materiales y autonomia de bateria requieren definicion y validacion.
