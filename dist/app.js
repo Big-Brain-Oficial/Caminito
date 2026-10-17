@@ -13,7 +13,7 @@ const icons = {
 const svg = name => `<svg viewBox="0 0 ${['car','case','battery'].includes(name)?26:16} ${['car','case','battery'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
 const models = {
   carrito: {
-    title:'Carrito de relevamiento',short:'Carrito de relevamiento',category:'Movilidad · Relevamiento',icon:'car',number:'01',code:'VA–001',
+    title:'Caminante',short:'Caminante',category:'Movilidad · Relevamiento',icon:'car',number:'01',code:'CM–001',
     subtitle:'Tres puntos de apoyo para observar y registrar el estado de las veredas.',
     dimensions:[['Largo del chasis','640','mm','Bastidor triangular'],['Ancho del chasis','400','mm','Medida máxima'],['Ruedas principales','200','mm','Diámetro de referencia']],
     overviewTitle:'Un recorrido que también genera información.',
@@ -25,7 +25,7 @@ const models = {
     cad:'CarroVeredas.FCStd',cadLabel:'Proyecto editable del carrito',obj:'carrito-obj.zip'
   },
   carcasa: {
-    title:'Carcasa para celular',short:'Carcasa para celular',category:'Soporte · Navegación',icon:'case',number:'02',code:'VA–002',
+    title:'Kit',short:'Kit',category:'Soporte · Navegación',icon:'case',number:'02',code:'CM–002',
     subtitle:'Pantalla accesible, apoyos ajustables y montaje orientable sobre un tubo.',
     dimensions:[['Ancho exterior','100','mm','Carcasa de referencia'],['Largo exterior','208','mm','Con espacio para carga'],['Tubos compatibles','19–22','mm','Con suplementos']],
     overviewTitle:'El teléfono, protegido y al alcance.',
@@ -37,7 +37,7 @@ const models = {
     cad:'PrototipoCarcasasCelulares.FCStd',cadLabel:'Proyecto de carcasa + portapowerbank',obj:'carcasa-obj.zip'
   },
   powerbank: {
-    title:'Portapowerbank modular',short:'Portapowerbank',category:'Energía · Accesorios',icon:'battery',number:'03',code:'VA–003',
+    title:'Batería',short:'Batería',category:'Energía · Accesorios',icon:'battery',number:'03',code:'CM–003',
     subtitle:'Un módulo de energía separado, desmontable y sujeto al bastidor.',
     dimensions:[['Ancho exterior','86','mm','Portabatería'],['Largo exterior','162','mm','Cuerpo del soporte'],['Alto exterior','33','mm','Sin abrazadera']],
     overviewTitle:'Energía independiente de la carcasa.',
@@ -206,7 +206,7 @@ for(const button of document.querySelectorAll('[data-tab]')){
 function fillInformation(key){
   const m=models[key];
   $('title').textContent=m.title;$('subtitle').textContent=m.subtitle;$('model-number').textContent=m.number;$('model-code').textContent=m.code;
-  document.title=m.title+' — Forma';
+  document.title=m.title+' — Caminito';
   for(const button of document.querySelectorAll('[data-model]')){const active=button.dataset.model===key;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');}
   $('dimensions').innerHTML=m.dimensions.map(([label,value,unit,note])=>`<div class="dimension-card"><span>${label}</span><strong>${value}</strong><small>${unit}</small><p>${note}</p></div>`).join('');
   $('overview-title').textContent=m.overviewTitle;$('overview-text').textContent=m.overview;

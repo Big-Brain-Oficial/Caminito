@@ -1,4 +1,4 @@
-# Forma — Biblioteca de prototipos
+# Caminito — Biblioteca de prototipos
 
 Sitio estatico con visor Three.js y modelos reales exportados desde FreeCAD.
 
