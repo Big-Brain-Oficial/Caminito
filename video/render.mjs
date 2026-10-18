@@ -1,6 +1,7 @@
 // Renderiza la escena cuadro por cuadro con Chrome y la codifica en MP4.
 // Uso:
 //   node render.mjs                         → salida/03-como-funciona.mp4 (completo)
+//   node render.mjs --escena ruta-andador   → salida/04-ruta-andador.mp4
 //   node render.mjs --desde 9 --hasta 19.5  → solo un tramo
 //   node render.mjs --fotos 3,12,22,35      → solo capturas PNG para revisar
 import http from 'node:http';
@@ -20,6 +21,8 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 }, []));
 const fps = Number(args.fps ?? 30);
 const fotos = typeof args.fotos === 'string' ? args.fotos.split(',').map(Number) : null;
+const escena = typeof args.escena === 'string' ? args.escena : 'como-funciona';
+const nombre = { 'como-funciona': '03-como-funciona', 'ruta-andador': '04-ruta-andador' }[escena] ?? escena;
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.svg': 'image/svg+xml' };
 const server = http.createServer((req, res) => {
@@ -29,7 +32,7 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(file).pipe(res);
 });
 await new Promise(r => server.listen(0, '127.0.0.1', r));
-const url = `http://127.0.0.1:${server.address().port}/video/como-funciona/escena.html?render`;
+const url = `http://127.0.0.1:${server.address().port}/video/${escena}/escena.html?render`;
 
 const browser = await puppeteer.launch({
   executablePath: CHROME,
@@ -54,13 +57,13 @@ const shot = async t => {
 
 if (fotos) {
   for (const t of fotos) {
-    const file = path.join(OUT_DIR, `foto-${String(t).replace('.', '_')}s.png`);
+    const file = path.join(OUT_DIR, `${escena}-foto-${String(t).replace('.', '_')}s.png`);
     fs.writeFileSync(file, await shot(t));
     console.log('→', file);
   }
 } else {
   const desde = Number(args.desde ?? 0), hasta = Number(args.hasta ?? duration);
-  const salida = path.resolve(import.meta.dirname, args.salida ?? path.join('salida', desde === 0 && hasta === duration ? '03-como-funciona.mp4' : `03-como-funciona_${desde}-${hasta}s.mp4`));
+  const salida = path.resolve(import.meta.dirname, args.salida ?? path.join('salida', desde === 0 && hasta === duration ? `${nombre}.mp4` : `${nombre}_${desde}-${hasta}s.mp4`));
   const ff = spawn(ffmpegPath, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'png', '-i', '-',
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', salida], { stdio: ['pipe', 'inherit', 'inherit'] });
   const total = Math.round((hasta - desde) * fps), t0 = Date.now();

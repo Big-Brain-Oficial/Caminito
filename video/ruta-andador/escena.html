@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caminito · Ruta al hospital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* Paleta Crimson & Chalk + mapa estilo Google Maps */
+:root{--ink:#1f2328;--muted:#5f6368;--crimson:#a51c30;--crimson-d:#7e1324;--chalk:#f3f0ea;--chalk-line:#e2ddd3;--good:#1e8e3e;--fair:#f9ab00;--bad:#d93025;--me:#1a73e8;--nav:#0d652d}
+*{box-sizing:border-box}
+html,body{margin:0;background:#d9d4ca;overflow:hidden;height:100%}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;font-family:Roboto,sans-serif;color:var(--ink);background:radial-gradient(ellipse 60% 90% at 70% 50%,#fbf9f5 0%,var(--chalk) 55%,#e9e4da 100%)}
+.abs{position:absolute}
+h1{font:700 72px/1.05 Roboto,sans-serif;letter-spacing:-1.8px;margin:0}
+
+#left{left:96px;top:205px;width:900px}
+#profile{margin-top:34px;display:flex;gap:20px;align-items:center;padding:14px 24px 14px 18px;background:#fff;border:1px solid var(--chalk-line);border-radius:18px;width:fit-content;box-shadow:0 8px 24px rgba(60,45,30,.06)}
+#profile img{width:58px;height:58px}
+#profile small{display:block;font:500 13px Roboto;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+#profile strong{display:block;font:700 29px Roboto;letter-spacing:-.4px;margin-top:2px}
+.reqs{display:flex;gap:8px;margin-left:10px}
+.reqs span{font:500 15px Roboto;color:#3c4043;background:#f1ede5;border-radius:99px;padding:6px 12px}
+#steps{margin-top:52px;display:grid;gap:30px}
+.step{display:flex;gap:24px;align-items:center}
+.step .n{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:700 25px Roboto;border:2px solid;flex-shrink:0}
+.step strong{font:700 36px Roboto;letter-spacing:-.8px}
+
+#phone{left:1130px;top:40px;width:490px;height:1000px;border-radius:72px;background:linear-gradient(145deg,#3b3f45,#17191c 40%,#0d0e10);box-shadow:0 40px 80px rgba(60,40,30,.32),inset 0 0 0 2px rgba(255,255,255,.08)}
+#screen{position:absolute;left:14px;top:14px;width:462px;height:972px;border-radius:58px;overflow:hidden;background:#fff;color:var(--ink)}
+#screen>*{position:absolute}
+#mapc{left:0;top:0}
+#island{left:171px;top:13px;width:120px;height:34px;border-radius:20px;background:#0b0c0e}
+#status{left:0;right:0;top:0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:6px 40px 0 46px;font:500 17px Roboto}
+#status .bat{display:flex;gap:6px;align-items:center}
+#status .bat i{display:block;width:26px;height:13px;border:2px solid currentColor;border-radius:4px;position:relative}
+#status .bat i::after{content:'';position:absolute;left:1px;top:1px;bottom:1px;width:16px;background:currentColor;border-radius:1px}
+#status .bars{display:flex;gap:2px;align-items:flex-end;height:12px}
+#status .bars b{width:3px;background:currentColor;border-radius:1px}
+
+.card{left:14px;right:14px;top:56px;border-radius:22px;box-shadow:0 2px 6px rgba(60,64,67,.18),0 8px 22px rgba(60,64,67,.12);overflow:hidden}
+#search{background:#fff;padding:16px 18px 14px}
+.srow{display:flex;align-items:center;gap:13px;height:36px}
+.srow .lbl{font:500 19px Roboto;flex:1;position:relative;height:26px}
+.srow .lbl span{position:absolute;left:0;top:0;white-space:nowrap}
+.me-dot{width:18px;height:18px;border-radius:50%;background:var(--me);border:3px solid #fff;box-shadow:0 0 0 3px #d2e3fc}
+.h-ico{width:22px;height:22px;border-radius:6px;background:var(--crimson);display:grid;place-items:center;color:#fff;font:700 13px Roboto;flex-shrink:0}
+.chipA{display:flex;align-items:center;gap:6px;font:500 15px Roboto;color:var(--crimson);background:#f7e8ea;border-radius:99px;padding:4px 12px 4px 6px}
+.chipA img{width:24px;height:24px}
+.mic{width:38px;height:38px;border-radius:50%;background:var(--crimson);display:grid;place-items:center;color:#fff}
+.mic svg{width:20px;height:20px}
+.sdiv{margin:6px 0 6px 8px;height:14px;border-left:2px dotted #bdc1c6}
+.sline{position:absolute;left:0;right:0;bottom:0;height:4px;overflow:hidden}
+.sline i{position:absolute;top:0;height:4px;width:40%;border-radius:2px;background:var(--crimson)}
+
+.nav{display:flex;align-items:center;gap:16px;padding:20px 20px;height:112px;color:#fff;background:var(--nav)}
+.nav .ic{width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.14);display:grid;place-items:center;flex-shrink:0}
+.nav .ic svg{width:32px;height:32px}
+.nav strong{display:block;font:700 23px/1.15 Roboto;letter-spacing:-.3px}
+.nav small{display:block;font:400 16px Roboto;margin-top:5px;opacity:.9}
+.nav.warn{background:var(--fair);color:#2b2100}
+.nav.warn .ic{background:rgba(43,33,0,.12)}
+.nav .fx{margin-left:auto;display:flex;gap:6px}
+.nav .fx svg{width:24px;height:24px}
+
+.sheet{left:0;right:0;bottom:0;background:#fff;border-radius:28px 28px 0 0;box-shadow:0 -2px 6px rgba(60,64,67,.12),0 -10px 30px rgba(60,64,67,.14)}
+.grab{position:absolute;left:50%;top:10px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:#dadce0}
+#voice{height:400px;display:flex;flex-direction:column;align-items:center;padding-top:34px}
+#voice .vlbl{font:500 14px Roboto;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+#wave{display:flex;align-items:center;gap:5px;height:72px;margin-top:18px}
+#wave b{width:6px;border-radius:3px;background:var(--crimson)}
+#said{font:700 33px Roboto;letter-spacing:-.6px;margin-top:22px;height:44px}
+#said span{opacity:0}
+#found{display:flex;align-items:center;gap:12px;margin-top:20px;padding:12px 18px;border-radius:16px;background:#f6eef0;font:500 18px Roboto}
+#found small{font-weight:400;color:var(--muted);margin-left:4px}
+.bigmic{width:66px;height:66px;border-radius:50%;background:var(--crimson);display:grid;place-items:center;color:#fff;position:absolute;bottom:34px;left:50%;margin-left:-33px}
+.bigmic svg{width:30px;height:30px}
+#sheetR{height:372px}
+.sc{position:absolute;left:0;right:0;top:0;bottom:0;padding:30px 26px 0}
+.shead{display:flex;justify-content:space-between;align-items:baseline;font:500 14px Roboto;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.shead b{font:500 17px Roboto;letter-spacing:0;text-transform:none;color:var(--ink)}
+.verdict{display:flex;align-items:center;gap:14px;margin-top:12px}
+.verdict i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:700 22px Roboto;font-style:normal;color:#fff;flex-shrink:0}
+.verdict strong{font:700 29px Roboto;letter-spacing:-.6px}
+.cls{display:flex;align-items:center;gap:10px;margin-top:12px;font:400 17px Roboto;color:var(--muted)}
+.st{font:700 14px Roboto;letter-spacing:1.2px;text-transform:uppercase;padding:6px 12px;border-radius:7px}
+.st.good{background:#e6f4ea;color:#137333}
+.mix{display:flex;gap:3px;height:12px;margin-top:14px;border-radius:7px;overflow:hidden}
+.mix i{display:block;height:100%}
+.legend{display:flex;gap:16px;margin-top:8px;font:500 14px Roboto;color:var(--muted)}
+.legend span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--c)}
+.why{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:5px;font:500 16.5px Roboto}
+.why li{display:flex;align-items:center;gap:9px}
+.why li::before{content:'✓';width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:700 12px Roboto;color:#fff;flex-shrink:0;background:var(--good)}
+.btn{position:absolute;left:26px;right:26px;bottom:26px;height:54px;border-radius:27px;display:grid;place-items:center;font:500 19px Roboto;background:var(--crimson);color:#fff}
+#navbar{height:128px;display:flex;align-items:center;justify-content:space-between;padding:8px 26px 0}
+#navbar strong{display:block;font:700 30px Roboto;letter-spacing:-.6px;color:var(--good)}
+#navbar small{display:block;font:400 15px Roboto;color:var(--muted);margin-top:2px}
+.fam{display:flex;align-items:center;gap:9px;font:500 14.5px Roboto;color:var(--muted);background:#f1f3f4;border-radius:99px;padding:6px 14px 6px 6px}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 14px Roboto;color:#fff;flex-shrink:0}
+
+#sos{left:0;top:0;width:462px;height:972px;background:linear-gradient(170deg,#b42239,#82132a);color:#fff}
+#sos .sc{padding:96px 30px 0;display:flex;flex-direction:column;align-items:center;text-align:center}
+#sos h3{font:700 40px Roboto;letter-spacing:-.8px;margin:26px 0 0}
+#sos p{font:400 20px/1.4 Roboto;margin:12px 0 0;opacity:.92}
+.ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin-top:34px}
+.ring b{width:122px;height:122px;border-radius:50%;background:#9c1b31;display:grid;place-items:center;font:700 58px Roboto}
+.alertic{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center}
+.alertic svg{width:46px;height:46px}
+.sosbtns{position:absolute;left:30px;right:30px;bottom:40px;display:grid;gap:12px}
+.sosbtns div{height:58px;border-radius:29px;display:grid;place-items:center;font:500 20px Roboto}
+.contacts{width:100%;margin-top:30px;display:grid;gap:12px;text-align:left}
+.contact{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.14);border-radius:18px;padding:14px 16px}
+.contact .av{width:46px;height:46px;font-size:19px;background:#fff;color:var(--crimson)}
+.contact strong{display:block;font:500 20px Roboto}
+.contact small{display:block;font:400 15.5px Roboto;opacity:.85;margin-top:2px}
+.contact .ok{margin-left:auto;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--good);display:grid;place-items:center;font:700 16px Roboto}
+.live{display:flex;align-items:center;gap:10px;margin-top:22px;font:500 17px Roboto}
+.live i{width:11px;height:11px;border-radius:50%;background:#fff}
+
+#finger{left:0;top:0;width:66px;height:66px;margin:-33px 0 0 -33px;border-radius:50%;background:rgba(255,255,255,.45);border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+#ripple{left:0;top:0;border-radius:50%;border:3px solid var(--crimson)}
+
+#caption{left:745px;top:150px;width:385px;padding:20px 24px;background:#fff;border:1px solid var(--chalk-line);border-radius:24px;box-shadow:0 20px 50px rgba(60,40,30,.18);display:flex;gap:16px;align-items:center}
+#caption .spk{width:50px;height:50px;border-radius:50%;background:var(--crimson);display:grid;place-items:center;flex-shrink:0;color:#fff}
+#caption .spk svg{width:26px;height:26px}
+#caption small{display:block;font:500 13px Roboto;letter-spacing:1.8px;text-transform:uppercase;color:var(--crimson)}
+#caption strong{display:block;font:500 22px/1.3 Roboto;margin-top:4px}
+
+/* Celular de Ana */
+#ana{left:768px;top:250px;width:300px}
+#ana .who{font:500 15px Roboto;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 14px 4px}
+#anaPhone{position:relative;width:300px;height:600px;border-radius:46px;background:linear-gradient(145deg,#3b3f45,#17191c 40%,#0d0e10);box-shadow:0 30px 60px rgba(60,40,30,.32)}
+#anaScreen{position:absolute;left:9px;top:9px;right:9px;bottom:9px;border-radius:38px;overflow:hidden;background:linear-gradient(165deg,#6d2433 0%,#3a1a24 45%,#16181c 100%);color:#fff;text-align:center}
+#anaScreen .isl{position:absolute;left:50%;top:10px;width:84px;height:24px;margin-left:-42px;border-radius:14px;background:#000}
+#anaScreen .lt{font:300 70px Roboto;letter-spacing:-2px;margin-top:62px}
+#anaScreen .ld{font:400 15px Roboto;opacity:.85;margin-top:2px}
+#banner{position:absolute;left:10px;right:10px;top:178px;background:rgba(250,248,245,.97);color:var(--ink);border-radius:22px;padding:13px 14px 12px;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+#banner .app{display:flex;align-items:center;gap:8px;font:500 12px Roboto;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+#banner .app img{width:24px;height:24px;border-radius:6px;background:var(--crimson);padding:2px}
+#banner .app span{margin-left:auto;letter-spacing:0;text-transform:none}
+#banner strong{display:block;font:700 17px/1.2 Roboto;margin-top:9px}
+#banner p{font:400 14px/1.35 Roboto;margin:4px 0 0;color:#3c4043}
+#banner .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+#banner .acts div{height:36px;border-radius:18px;display:grid;place-items:center;font:500 14px Roboto;background:#e8eaed}
+#banner .acts div:first-child{background:var(--crimson);color:#fff}
+.vib{position:absolute;top:230px;width:24px;height:130px}
+.vib i{position:absolute;top:0;bottom:0;width:22px;border:3px solid var(--crimson);border-radius:50%}
+#vibL{left:-40px}#vibL i{border-right-color:transparent;border-top-color:transparent;border-bottom-color:transparent}
+#vibR{right:-40px}#vibR i{border-left-color:transparent;border-top-color:transparent;border-bottom-color:transparent}
+
+#controls[hidden]{display:none}
+#controls{position:fixed;left:0;right:0;bottom:0;height:48px;display:flex;gap:12px;align-items:center;padding:0 16px;background:#111618;color:#cfd6d3;font:14px Roboto,sans-serif}
+#controls input{flex:1}
+#controls button{background:#273032;color:#fff;border:0;border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="8.5" y="2.5" width="7" height="12" rx="3.5" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 20V5M5.5 11 12 4.5 18.5 11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5 22 20.5H2Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="i-ramp" viewBox="0 0 24 24"><path d="M3 19h18L21 9Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M6 6h6M10 3.5 12.5 6 10 8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-spk" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-vib" viewBox="0 0 24 24"><rect x="7.5" y="3.5" width="9" height="17" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8v8M20 8v8M1.5 10v4M22.5 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="16.6" r="1.5" fill="currentColor"/></symbol>
+</svg>
+<div id="stage">
+  <div class="abs" id="left">
+    <h1>Llegá al hospital<br>con tu andador.</h1>
+    <div id="profile">
+      <img class="logoC" alt="">
+      <div><small>Perfil de movilidad</small><strong>Andador</strong></div>
+      <div class="reqs"><span>Superficie pareja</span><span>Rampas</span></div>
+    </div>
+    <div id="steps">
+      <div class="step" id="st1"><div class="n">1</div><strong>Pedís por voz cómo llegar</strong></div>
+      <div class="step" id="st2"><div class="n">2</div><strong>Caminito arma la ruta más segura</strong></div>
+      <div class="step" id="st3"><div class="n">3</div><strong>Te avisa antes de cada obstáculo</strong></div>
+      <div class="step" id="st4"><div class="n">4</div><strong>Si algo pasa, avisa a tu familia</strong></div>
+    </div>
+  </div>
+
+  <div class="abs" id="phone">
+    <div id="screen">
+      <canvas id="mapc" width="462" height="972"></canvas>
+      <div class="card" id="search">
+        <div class="srow"><span class="me-dot"></span><span class="lbl"><span>Mi ubicación</span></span><span class="chipA"><img class="logoC" alt="">Andador</span></div>
+        <div class="sdiv"></div>
+        <div class="srow"><span class="h-ico" id="destIco" style="background:#bdc1c6">?</span><span class="lbl"><span id="ph" style="color:#80868b;font-weight:400">¿A dónde vas?</span><span id="dest" style="opacity:0">Hospital Municipal</span></span><span class="mic" id="micBtn"><svg><use href="#i-mic"/></svg></span></div>
+        <div class="sline" id="sline"><i id="slineI"></i></div>
+      </div>
+      <div class="card nav" id="navA" style="opacity:0"><span class="ic"><svg><use href="#i-up"/></svg></span><div><strong>Seguí derecho 300 m</strong><small>Vereda en buen estado</small></div></div>
+      <div class="card nav warn" id="navW" style="opacity:0"><span class="ic"><svg><use href="#i-warn"/></svg></span><div><strong>Grieta en 15 m</strong><small>Andá despacio, por la derecha</small></div><span class="fx" id="fx"><svg><use href="#i-spk"/></svg><svg><use href="#i-vib"/></svg></span></div>
+      <div class="card nav" id="navR" style="opacity:0"><span class="ic"><svg><use href="#i-ramp"/></svg></span><div><strong>Cruzá por la rampa</strong><small>En la esquina, a tu derecha</small></div></div>
+
+      <div class="sheet" id="sheetR">
+        <div class="grab"></div>
+        <div class="sc">
+          <div class="shead">Ruta más segura <b id="metaR"></b></div>
+          <div class="verdict"><i style="background:var(--good)">✓</i><strong>Apta para andador</strong></div>
+          <div class="cls">Clasificación <span class="st good">Buen estado</span></div>
+          <div class="mix" id="mixR"></div>
+          <div class="legend" id="legR"></div>
+          <ul class="why"><li>Evita la cuadra con baldosas levantadas</li><li>Rampas en todas las esquinas</li></ul>
+          <div class="btn" id="btnGo">Iniciar recorrido</div>
+        </div>
+      </div>
+      <div class="sheet" id="navbar">
+        <div class="grab"></div>
+        <div><strong id="eta">18 min</strong><small id="etaSub">600 m · llegás 10:02</small></div>
+        <div class="fam"><span class="av" style="background:#7b6fd0">A</span>Ana sigue tu viaje</div>
+      </div>
+      <div class="sheet" id="voice">
+        <div class="grab"></div>
+        <div class="vlbl" id="vlbl">Te escucho…</div>
+        <div id="wave"></div>
+        <div id="said"><span>¿Cómo</span> <span>llego</span> <span>al</span> <span>hospital?</span></div>
+        <div id="found" style="opacity:0"><span class="h-ico">H</span>Hospital Municipal<small>a 600 m</small></div>
+        <div class="bigmic"><svg><use href="#i-mic"/></svg></div>
+      </div>
+
+      <div id="sos" style="opacity:0">
+        <div class="sc" id="sosA">
+          <div class="alertic"><svg><use href="#i-alert"/></svg></div>
+          <h3>¿Estás bien?</h3>
+          <p>Detectamos un golpe fuerte en el andador y no te estás moviendo.</p>
+          <div class="ring" id="ring"><b id="count">3</b></div>
+          <p style="font-weight:500">Avisamos a tu familia en <span id="count2">3</span> s</p>
+          <div class="sosbtns"><div style="background:#fff;color:var(--crimson)">Pedir ayuda ahora</div><div style="border:2px solid rgba(255,255,255,.7)">Estoy bien</div></div>
+        </div>
+        <div class="sc" id="sosB" style="opacity:0">
+          <div class="alertic" style="background:#fff;color:var(--good);font:700 44px Roboto">✓</div>
+          <h3>Avisamos a tu familia</h3>
+          <p>Ya saben dónde estás y que podrías necesitar ayuda.</p>
+          <div class="contacts">
+            <div class="contact" id="c1"><span class="av">A</span><div><strong>Ana · hija</strong><small>Recibió tu ubicación</small></div><span class="ok">✓</span></div>
+            <div class="contact" id="c2"><span class="av">M</span><div><strong>Martín · hijo</strong><small>Recibió tu ubicación</small></div><span class="ok">✓</span></div>
+          </div>
+          <div class="live"><i id="liveDot"></i>Ubicación en vivo compartida</div>
+          <div class="sosbtns"><div style="background:#fff;color:var(--crimson)">Llamar a Ana</div></div>
+        </div>
+      </div>
+      <div id="status"><span>9:44</span><span class="bat"><span class="bars"><b style="height:5px"></b><b style="height:8px"></b><b style="height:10px"></b><b style="height:12px"></b></span><i></i></span></div>
+      <div id="island"></div>
+      <div id="ripple" style="opacity:0"></div>
+      <div id="finger" style="opacity:0"></div>
+    </div>
+  </div>
+
+  <div class="abs" id="caption" style="opacity:0"><span class="spk"><svg><use href="#i-spk"/></svg></span><div><small>Caminito te avisa</small><strong>“Atención: grieta en quince metros. Andá despacio.”</strong></div></div>
+
+  <div class="abs" id="ana" style="opacity:0">
+    <div class="who">Celular de Ana</div>
+    <div id="anaPhone">
+      <div class="vib" id="vibL"><i style="left:0"></i><i style="left:-12px"></i></div>
+      <div class="vib" id="vibR"><i style="right:0"></i><i style="right:-12px"></i></div>
+      <div id="anaScreen">
+        <div class="isl"></div>
+        <div class="lt">9:44</div>
+        <div class="ld">sábado, 17 de octubre</div>
+        <div id="banner">
+          <div class="app"><img class="logoW" alt="">Caminito<span>ahora</span></div>
+          <strong>Tu mamá podría necesitar ayuda</strong>
+          <p>Golpe fuerte en su andador, a 300 m del Hospital Municipal.</p>
+          <div class="acts"><div>Ver ubicación</div><div>Llamar</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="controls" hidden><button id="play">Pausa</button><input id="scrub" type="range" min="0" max="15" step="0.01" value="0"><span id="clock">0,00 s</span></div>
+
+<script type="module">
+const W=1920,H=1080,DURATION=15,SW=462,SH=972;
+const qs=new URLSearchParams(location.search);
+const RENDER=qs.has('render');
+const $=id=>document.getElementById(id);
+
+const clamp=(v,a=0,b=1)=>v<a?a:v>b?b:v;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=t=>{t=clamp(t);return t*t*(3-2*t);};
+const ease=t=>{t=clamp(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+const easeOut=t=>1-Math.pow(1-clamp(t),3);
+const easeBack=t=>{t=clamp(t);const c=1.9;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2);};
+const range=(t,a,b)=>clamp((t-a)/(b-a));
+const span=(t,a,b,fi=.5,fo=fi)=>Math.min(smooth(range(t,a,a+fi)),1-smooth(range(t,b-fo,b)));
+function mulberry32(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const fmt=(v,d=1)=>v.toFixed(d).replace('.',',');
+
+// ───────────── Paleta
+const CRIMSON='#a51c30',ME_BLUE='#1a73e8';
+const COLORS={G:'#1e8e3e',Y:'#f9ab00',R:'#d93025'};
+const MAP={road:'#ffffff',roadEdge:'#dadce0',block:'#f1f3f4',bldg:'#e3e5e8',bldgEdge:'#d4d7dc',park:'#ceead6',tree:'#b4dfbf',hosp:'#fbe6e8',hospBldg:'#f4d0d6',label:'#70757a'};
+
+// ───────────── Línea de tiempo (segundos)
+const T={
+  tapMic:.45,voiceUp:[.5,.9],words:[.9,1.2,1.45,1.75],found:2.15,voiceDown:[2.7,3.1],pin:2.6,
+  r1:[3.2,4.2],dim1:[4.3,4.7],r2:[4.4,5.5],sheet:[5.45,5.9],tapGo:6.7,
+  start:[6.85,7.25],camNav:[6.9,7.6],hideR1:[6.9,7.3],
+  walk:[[7.25,0],[8.2,.2],[9.2,.32],[9.9,.41],[10.5,.49]],
+  navA:[7.05,7.85],navW:[7.8,9.25],navR:[9.2,10.65],
+  impact:10.5,sos:[10.75,11.05],count:[11.05,12.55],sent:12.55,
+  ana:[12.55,12.95],notif:12.95,buzz:[[12.95,13.45],[13.65,14.15]],
+};
+
+// ───────────── Barrio: grilla de manzanas. Las calles pasan por (i·P, j·P).
+const P=158,ST=36,CUADRA_M=100,V_ANDADOR=.55;
+function buildRoute(pts,states){
+  const segs=[];let tot=0;
+  for(let k=0;k<pts.length-1;k++){const a=pts[k].map(v=>v*P),b=pts[k+1].map(v=>v*P),len=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push({a,b,len,c0:tot,state:states[k]});tot+=len;}
+  const share={G:0,Y:0,R:0};for(const s of segs)share[s.state]+=s.len/tot;
+  const m=tot/P*CUADRA_M;
+  return{segs,tot,share,m,min:Math.round(m/V_ANDADOR/60)};
+}
+const pointAt=(R,u)=>{const L=clamp(u)*R.tot;for(const s of R.segs)if(L<=s.c0+s.len){const k=(L-s.c0)/s.len;return[lerp(s.a[0],s.b[0],k),lerp(s.a[1],s.b[1],k)];}return R.segs.at(-1).b;};
+const fracAt=(R,x,y)=>{for(const s of R.segs){const d=Math.hypot(x-s.a[0],y-s.a[1]);if(d<=s.len+.01&&Math.abs((x-s.a[0])*(s.b[1]-s.a[1])-(y-s.a[1])*(s.b[0]-s.a[0]))<1)return(s.c0+d)/R.tot;}return 1;};
+
+// Ruta más corta (descartada): baldosa levantada con pozo y esquina sin rampa.
+const R1=buildRoute([[0,4.5],[0,4],[1,4],[1,3],[1,2],[2,2],[2,1.5]],'GGYRGG');
+// Ruta más segura: una cuadra más, sin tramos en mal estado. Una grieta leve.
+const R2=buildRoute([[0,4.5],[0,4],[0,3],[0,2],[0,1],[1,1],[2,1],[2,1.5]],'GGYGGGG');
+const ISSUES=[{x:1*P,y:2.5*P,text:'Baldosas levantadas',side:1},{x:2*P,y:2*P,text:'Sin rampa',side:-1}];
+const RAMPS=[[0,4],[0,3],[0,2],[0,1],[1,1],[2,1]].map(([i,j])=>({x:i*P,y:j*P}));
+const CRACK={x:0,y:2.5*P};
+const ME=[0,4.5*P],HOSP=[2*P,1.5*P];
+const STREETS=[{v:true,at:-1,name:'Mitre',pos:[1.5,4.5]},{v:true,at:1,name:'Sarmiento',pos:[5.5,-.5]},{v:true,at:3,name:'Lavalle',pos:[2.5,4.5]},
+  {v:false,at:0,name:'Av. Libertad',pos:[.5]},{v:false,at:3,name:'Moreno',pos:[-.5,2.5]},{v:false,at:5,name:'Rivadavia',pos:[.5,2.5]}];
+
+const prog1=t=>smooth(range(t,...T.r1)),prog2=t=>smooth(range(t,...T.r2));
+const timeAtProg=(fn,f,a,b)=>{for(let k=0;k<=2000;k++){const t=lerp(a,b,k/2000);if(fn(t)>=f)return t;}return b;};
+for(const s of ISSUES)s.t=timeAtProg(prog1,fracAt(R1,s.x,s.y),...T.r1);
+for(const s of RAMPS)s.t=timeAtProg(prog2,fracAt(R2,s.x,s.y),...T.r2);
+function walkU(t){
+  const K=T.walk;if(t<=K[0][0])return 0;
+  for(let k=0;k<K.length-1;k++){const[a,ua]=K[k],[b,ub]=K[k+1];if(t<=b){let f=(t-a)/(b-a);if(k===0)f=f*f;if(k===K.length-2)f=1-(1-f)*(1-f);return lerp(ua,ub,f);}}
+  return K.at(-1)[1];
+}
+const mePos=t=>pointAt(R2,walkU(t));
+
+function cam(t){
+  const intro=easeOut(range(t,0,1.1)),[mx,my]=mePos(t);
+  const A={s:lerp(1.07,1,intro),cx:P,cy:3*P,sy:560};
+  const B={s:.66,cx:P,cy:2.8*P,sy:397};
+  const C={s:1.3,cx:mx+.3*P,cy:my-.55*P,sy:540};
+  const mix=(X,Y,k)=>({s:lerp(X.s,Y.s,k),cx:lerp(X.cx,Y.cx,k),cy:lerp(X.cy,Y.cy,k),sy:lerp(X.sy,Y.sy,k)});
+  return mix(mix(A,B,ease(range(t,...T.sheet))),C,ease(range(t,...T.camNav)));
+}
+const toScreen=(c,x,y)=>[SW/2+(x-c.cx)*c.s,c.sy+(y-c.cy)*c.s];
+
+// ───────────── Dibujo del mapa (estilo Google Maps)
+const g=$('mapc').getContext('2d');
+const font=(w,s)=>`${w} ${s}px Roboto, sans-serif`;
+function rr(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r);}
+function pill(x,y,text,{bg='#202124',fg='#fff',size=14,dot=null,align='left'}={}){
+  g.font=font(500,size);const tw=g.measureText(text).width,h=size+14,w=tw+22+(dot?16:0);
+  const x0=align==='right'?x-w:align==='center'?x-w/2:x;
+  g.save();g.shadowColor='rgba(60,64,67,.3)';g.shadowBlur=6;g.shadowOffsetY=2;rr(x0,y-h/2,w,h,h/2);g.fillStyle=bg;g.fill();g.restore();
+  if(dot){g.beginPath();g.arc(x0+14,y,5,0,7);g.fillStyle=dot;g.fill();}
+  g.fillStyle=fg;g.textBaseline='middle';g.textAlign='left';g.fillText(text,x0+11+(dot?16:0),y+1);
+}
+const BLOCKS=(()=>{const out=[];for(let i=-3;i<6;i++)for(let j=-4;j<9;j++){const r=mulberry32(1000+i*37+j*101);out.push({i,j,park:i===-1&&j===2,hosp:i===2&&j===1,split:.35+r()*.3,lots:[...Array(3)].map(()=>.2+r()*.6),trees:[...Array(14)].map(()=>[r(),r(),r()])});}return out;})();
+function drawBase(c){
+  g.setTransform(1,0,0,1,0,0);g.fillStyle=MAP.road;g.fillRect(0,0,SW,SH);
+  g.setTransform(c.s,0,0,c.s,SW/2-c.cx*c.s,c.sy-c.cy*c.s);
+  const w=P-ST,lw=1/c.s;
+  for(const b of BLOCKS){
+    const x=b.i*P+ST/2,y=b.j*P+ST/2;
+    rr(x,y,w,w,4);g.fillStyle=b.park?MAP.park:b.hosp?MAP.hosp:MAP.block;g.fill();g.lineWidth=1.4*lw;g.strokeStyle=MAP.roadEdge;g.stroke();
+    if(b.park){for(const[a,bb,s]of b.trees){g.beginPath();g.arc(x+14+a*(w-28),y+14+bb*(w-28),5+s*4,0,7);g.fillStyle=MAP.tree;g.fill();}continue;}
+    if(b.hosp){
+      rr(x+12,y+12,w-24,w-46,3);g.fillStyle=MAP.hospBldg;g.fill();g.strokeStyle='#e7b9c1';g.lineWidth=lw;g.stroke();
+      g.beginPath();g.arc(x+w/2,y+36,15,0,7);g.fillStyle=CRIMSON;g.fill();
+      g.fillStyle='#fff';g.fillRect(x+w/2-8,y+33,16,6);g.fillRect(x+w/2-3,y+28,6,16);
+      g.fillStyle=CRIMSON;g.font=font(500,12);g.textAlign='center';g.textBaseline='middle';g.fillText('Hospital',x+w/2,y+w-20);g.textAlign='left';
+      continue;
+    }
+    // Edificios: lotes con contorno fino
+    const ins=9,my=y+ins+b.split*(w-2*ins);
+    const cols=[0,...b.lots.sort(),1];
+    for(const[ya,yb]of[[y+ins,my],[my,y+w-ins]])for(let k=0;k<cols.length-1;k++){
+      const xa=x+ins+cols[k]*(w-2*ins)+1.5,xb=x+ins+cols[k+1]*(w-2*ins)-1.5;
+      g.beginPath();g.rect(xa,ya+1.5,xb-xa,yb-ya-3);g.fillStyle=MAP.bldg;g.fill();g.strokeStyle=MAP.bldgEdge;g.lineWidth=lw;g.stroke();
+    }
+  }
+  // Nombres de calles
+  g.font=font(500,12.5/c.s);g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';
+  for(const s of STREETS)for(const p of s.pos){
+    g.save();
+    if(s.v){g.translate(s.at*P,p*P);g.rotate(-Math.PI/2);}else g.translate(p*P,s.at*P);
+    g.strokeStyle='#fff';g.lineWidth=3/c.s;g.strokeText(s.name,0,0);g.fillStyle=MAP.label;g.fillText(s.name,0,0);g.restore();
+  }
+  g.textAlign='left';
+}
+function strokePath(R,u0,u1,width,color,s){
+  const L0=u0*R.tot,L1=u1*R.tot;if(L1<=L0)return;
+  let started=false;g.beginPath();
+  for(const sg of R.segs){
+    const a=Math.max(L0,sg.c0),b=Math.min(L1,sg.c0+sg.len);if(b<a)continue;
+    const p=k=>[lerp(sg.a[0],sg.b[0],(k-sg.c0)/sg.len),lerp(sg.a[1],sg.b[1],(k-sg.c0)/sg.len)];
+    if(!started){g.moveTo(...p(a));started=true;}g.lineTo(...p(b));
+  }
+  g.lineWidth=width/s;g.strokeStyle=color;g.stroke();
+}
+function drawRoute(R,u,c,{dim=0,alpha=1,walked=0}={}){
+  if(u<=0||alpha<=0)return;
+  g.lineCap='round';g.lineJoin='round';
+  if(dim>0){g.globalAlpha=dim*alpha;g.setLineDash([.1/c.s,12/c.s]);strokePath(R,0,u,8,'#9aa0a6',c.s);g.setLineDash([]);}
+  g.globalAlpha=(1-dim)*alpha;
+  if(g.globalAlpha>0){
+    strokePath(R,0,u,16,'rgba(32,33,36,.28)',c.s);
+    const L=u*R.tot;
+    for(const sg of R.segs){if(L<=sg.c0)break;const k=clamp((L-sg.c0)/sg.len);g.beginPath();g.moveTo(...sg.a);g.lineTo(lerp(sg.a[0],sg.b[0],k),lerp(sg.a[1],sg.b[1],k));g.lineWidth=11/c.s;g.strokeStyle=COLORS[sg.state];g.stroke();}
+    if(walked>0)strokePath(R,0,walked,11,'#bdc1c6',c.s);
+  }
+  g.globalAlpha=1;
+}
+function routeHead(R,u,c){
+  if(u<=0||u>=1)return;
+  const[x,y]=toScreen(c,...pointAt(R,u)),sg=R.segs.find(s=>u*R.tot<=s.c0+s.len)??R.segs.at(-1);
+  g.beginPath();g.arc(x,y,17,0,7);g.fillStyle=COLORS[sg.state]+'44';g.fill();
+  g.beginPath();g.arc(x,y,8,0,7);g.fillStyle='#fff';g.fill();g.lineWidth=4;g.strokeStyle=COLORS[sg.state];g.stroke();
+}
+function teardrop(x,y,k,color,glyph,{r=15,fg='#fff',size=17}={}){
+  g.save();g.translate(x,y);g.scale(k,k);
+  g.shadowColor='rgba(0,0,0,.3)';g.shadowBlur=6;g.shadowOffsetY=2;
+  g.beginPath();g.moveTo(0,0);g.bezierCurveTo(-r/3,-r*.6,-r,-r*1.07,-r,-r*1.87);g.arc(0,-r*1.87,r,Math.PI,0);g.bezierCurveTo(r,-r*1.07,r/3,-r*.6,0,0);
+  g.fillStyle=color;g.fill();g.shadowColor='transparent';g.lineWidth=2.5;g.strokeStyle='#fff';g.stroke();
+  g.fillStyle=fg;g.font=font(700,size);g.textAlign='center';g.textBaseline='middle';g.fillText(glyph,0,-r*1.85);g.restore();g.textAlign='left';
+}
+let walkerImg=null;
+function meMarker(x,y,t,label,alarm){
+  const pulse=(t*1.1)%1,col=alarm>0?`rgba(217,48,37,${.4*(1-pulse)})`:`rgba(26,115,232,${.28*(1-pulse)})`;
+  g.beginPath();g.arc(x,y,24+pulse*(26+alarm*20),0,7);g.fillStyle=col;g.fill();
+  g.save();g.shadowColor='rgba(0,0,0,.3)';g.shadowBlur=6;g.shadowOffsetY=2;g.beginPath();g.arc(x,y,25,0,7);g.fillStyle='#fff';g.fill();g.restore();
+  g.beginPath();g.arc(x,y,21,0,7);g.fillStyle=alarm>.5?COLORS.R:ME_BLUE;g.fill();
+  if(walkerImg)g.drawImage(walkerImg,x-15,y-15,30,30);
+  if(label>0){g.globalAlpha=label;pill(x,y+44,'Vos · con andador',{align:'center',size:14});g.globalAlpha=1;}
+}
+function hospPin(x,y,k,drop){
+  g.save();g.globalAlpha=k;
+  g.beginPath();g.ellipse(x,y+2,10*(1-drop*.5),4*(1-drop*.5),0,0,7);g.fillStyle='rgba(32,33,36,.25)';g.fill();
+  g.restore();
+  g.save();g.globalAlpha=k;teardrop(x,y-drop*70,1,CRIMSON,'H',{r:20,size:20});g.restore();
+}
+function drawMap(t){
+  const c=cam(t);
+  drawBase(c);
+  const dim=smooth(range(t,...T.dim1)),hide1=1-smooth(range(t,...T.hideR1)),u=walkU(t);
+  drawRoute(R1,prog1(t),c,{dim,alpha:hide1});
+  drawRoute(R2,prog2(t),c,{walked:u});
+  g.setTransform(1,0,0,1,0,0);
+  routeHead(R1,prog1(t),c);routeHead(R2,prog2(t),c);
+  for(const r of RAMPS){const k=easeBack(range(t,r.t,r.t+.3));if(k<=0)continue;const[x,y]=toScreen(c,r.x,r.y);
+    g.save();g.translate(x,y);g.scale(k,k);g.beginPath();g.arc(0,0,10,0,7);g.fillStyle=COLORS.G;g.fill();g.lineWidth=2.5;g.strokeStyle='#fff';g.stroke();
+    g.strokeStyle='#fff';g.lineWidth=2.4;g.beginPath();g.moveTo(-4,0);g.lineTo(-1,3);g.lineTo(4.5,-3.5);g.stroke();g.restore();}
+  for(const s of ISSUES){
+    const k=easeBack(range(t,s.t,s.t+.35));if(k<=0||hide1<=0)continue;const[x,y]=toScreen(c,s.x,s.y);
+    g.globalAlpha=lerp(1,.6,dim)*hide1;teardrop(x,y,k,COLORS.R,'!');
+    const lk=easeOut(range(t,s.t+.15,s.t+.45));
+    if(lk>0){g.globalAlpha*=lk;pill(x+s.side*24,y-28,s.text,{bg:COLORS.R,size:13,align:s.side>0?'left':'right'});}
+    g.globalAlpha=1;
+  }
+  {const k=easeOut(range(t,T.dim1[0]+.1,T.dim1[1]+.1))*hide1;if(k>0){const[x,y]=toScreen(c,P,3.5*P);g.globalAlpha=k;pill(x+16,y,'✕ Más corta · no apta',{bg:'#fff',fg:COLORS.R,size:13});g.globalAlpha=1;}}
+  // Obstáculo anunciado durante el recorrido
+  {const k=easeBack(range(t,T.navW[0]-.1,T.navW[0]+.25)),out=1-smooth(range(t,9.4,9.8));if(k>0&&out>0){const[x,y]=toScreen(c,CRACK.x,CRACK.y);
+    const p=(t*1.6)%1;g.globalAlpha=out;g.beginPath();g.arc(x,y,10+p*26,0,7);g.fillStyle=`rgba(249,171,0,${.45*(1-p)})`;g.fill();
+    teardrop(x,y,k*1.1,COLORS.Y,'!',{fg:'#2b2100'});pill(x+26,y-30,'Grieta',{bg:COLORS.Y,fg:'#2b2100',size:14});g.globalAlpha=1;}}
+  {const k=smooth(range(t,T.pin,T.pin+.1)),drop=1-easeBack(range(t,T.pin,T.pin+.45));if(k>0){const[x,y]=toScreen(c,...HOSP);hospPin(x,y,k,drop);}}
+  {const[x,y]=toScreen(c,...mePos(t)),alarm=smooth(range(t,T.impact,T.impact+.2));
+    if(alarm>0){const u2=range(t,T.impact,T.impact+.7);if(u2<1){g.globalAlpha=1-u2;g.lineWidth=5;g.strokeStyle=COLORS.R;g.beginPath();g.arc(x,y,26+70*easeOut(u2),0,7);g.stroke();g.globalAlpha=1;}}
+    meMarker(x,y,t,1-smooth(range(t,3.0,3.4)),alarm);}
+}
+
+// ───────────── Dedo (indicador de toque) en coordenadas de pantalla del teléfono
+const TAPS=[
+  {t:T.tapMic,pos:[SW-14-18-19,56+16+36+26+18],from:[SW+60,420],to:[SW+70,330]},
+  {t:T.tapGo,pos:[SW/2+40,SH-26-27],from:[SW+60,SH-40],to:[SW+70,SH-120]},
+];
+function drawFinger(t){
+  const f=$('finger'),rp=$('ripple');
+  const tp=TAPS.find(p=>t>p.t-.65&&t<p.t+.65);
+  if(!tp){f.style.opacity=0;rp.style.opacity=0;return;}
+  const{t:tt,pos,from,to}=tp;
+  const a=ease(range(t,tt-.6,tt-.08)),l=ease(range(t,tt+.15,tt+.6));
+  const x=t<tt?lerp(from[0],pos[0],a):lerp(pos[0],to[0],l),y=t<tt?lerp(from[1],pos[1],a):lerp(pos[1],to[1],l);
+  f.style.opacity=span(t,tt-.6,tt+.6,.18,.2).toFixed(3);
+  f.style.transform=`translate(${x}px,${y}px) scale(${1-.18*span(t,tt-.06,tt+.14,.06,.08)})`;
+  const u=range(t,tt,tt+.5);
+  if(u>0&&u<1){const r=12+50*easeOut(u);rp.style.opacity=(1-u).toFixed(3);rp.style.width=rp.style.height=2*r+'px';rp.style.transform=`translate(${pos[0]-r}px,${pos[1]-r}px)`;}else rp.style.opacity=0;
+}
+
+// ───────────── Interfaz
+const setO=(id,v)=>{$(id).style.opacity=(+v).toFixed(3);};
+const slideY=(id,k,d)=>{$(id).style.transform=`translateY(${(1-k)*d}px)`;};
+{
+  $('mixR').innerHTML=['G','Y','R'].filter(k=>R2.share[k]>0).map(k=>`<i style="flex:${R2.share[k]};background:${COLORS[k]}"></i>`).join('');
+  const names={G:'Bueno',Y:'Regular',R:'Malo'};
+  $('legR').innerHTML=['G','Y','R'].map(k=>`<span style="--c:${COLORS[k]}">${names[k]} ${Math.round(R2.share[k]*100)}%</span>`).join('');
+  $('metaR').textContent=`${R2.m} m · ${R2.min} min`;
+  $('wave').innerHTML='<b></b>'.repeat(30);
+}
+const waveBars=[...$('wave').children],words=[...$('said').children];
+function stepStyle(id,w){
+  const s=$(id);s.style.opacity=(.38+.62*w).toFixed(3);
+  const n=s.querySelector('.n');
+  n.style.background=`rgba(165,28,48,${w.toFixed(3)})`;
+  n.style.borderColor=`rgba(${lerp(31,165,w)|0},${lerp(35,28,w)|0},${lerp(40,48,w)|0},${lerp(.3,1,w).toFixed(3)})`;
+  const c=lerp(31,255,smooth(w))|0;n.style.color=`rgb(${c},${c},${c})`;
+}
+// Vibración: ráfagas cortas con giro y desplazamiento
+function buzz(t){let v=0;for(const[a,b]of T.buzz)v=Math.max(v,span(t,a,b,.04,.06));return v;}
+function updateDOM(t){
+  const intro=easeOut(range(t,0,.7));
+  $('left').style.opacity=intro.toFixed(3);$('left').style.transform=`translateY(${(1-intro)*24}px)`;
+  const pi=easeOut(range(t,0,.8)),warnK=span(t,T.navW[0],T.navW[0]+.6,.05,.2);
+  const shake=Math.sin(t*95)*4*warnK;
+  $('phone').style.opacity=smooth(range(t,0,.4)).toFixed(3);$('phone').style.transform=`translate(${shake}px,${(1-pi)*60}px)`;
+
+  stepStyle('st1',span(t,.2,3.15,.3,.3));
+  stepStyle('st2',span(t,3.05,7.0,.3,.3));
+  stepStyle('st3',span(t,6.95,10.75,.3,.3));
+  stepStyle('st4',smooth(range(t,10.65,10.95)));
+
+  // Búsqueda por voz
+  $('micBtn').style.transform=`scale(${1-.12*span(t,T.tapMic-.05,T.tapMic+.15,.06,.1)})`;
+  slideY('voice',easeOut(range(t,...T.voiceUp))*(1-ease(range(t,...T.voiceDown))),430);
+  const talk=span(t,.85,2.05,.1,.2);
+  waveBars.forEach((b,i)=>{const n=Math.abs(Math.sin(t*13+i*1.7)*Math.sin(t*7.3+i*.9));b.style.height=(8+talk*58*n*(1-Math.abs(i-14.5)/18)+3*Math.sin(t*4+i))+'px';b.style.opacity=(.45+.55*talk).toFixed(3);});
+  words.forEach((w,i)=>{w.style.opacity=easeOut(range(t,T.words[i],T.words[i]+.2)).toFixed(3);});
+  $('vlbl').textContent=t<T.found?'Te escucho…':'Buscando la ruta más segura…';
+  setO('found',easeOut(range(t,T.found,T.found+.3)));$('found').style.transform=`translateY(${(1-easeOut(range(t,T.found,T.found+.3)))*12}px)`;
+  const dk=smooth(range(t,T.found+.1,T.found+.35));setO('ph',1-dk);setO('dest',dk);
+  $('destIco').style.background=dk>.5?CRIMSON:'#bdc1c6';$('destIco').textContent=dk>.5?'H':'?';
+  const busy=span(t,2.6,5.5,.15,.2);setO('sline',busy);$('slineI').style.left=(((t*.9)%1)*140-40)+'%';
+
+  // Ruta
+  slideY('sheetR',easeOut(range(t,...T.sheet))*(1-ease(range(t,...T.start))),400);
+  $('btnGo').style.transform=`scale(${1-.035*span(t,T.tapGo-.05,T.tapGo+.18,.06,.1)})`;
+
+  // Navegación
+  const navOn=smooth(range(t,...T.start)),sosK=smooth(range(t,...T.sos));
+  setO('search',1-navOn);
+  setO('navA',span(t,...T.navA,.3,.15));setO('navW',span(t,...T.navW,.12,.15));setO('navR',span(t,T.navR[0],T.navR[1],.15,.3));
+  $('fx').style.opacity=(.55+.45*Math.abs(Math.sin(t*9))).toFixed(3);
+  slideY('navbar',easeOut(range(t,7.1,7.5)),160);
+  const u=walkU(t);$('eta').textContent=Math.ceil(R2.min*(1-u))+' min';$('etaSub').textContent=Math.round(R2.m*(1-u)/10)*10+' m · llegás 10:02';
+  setO('caption',span(t,T.navW[0]+.1,T.navW[1]+.1,.3,.3));$('caption').style.transform=`translateY(${(1-easeOut(range(t,T.navW[0]+.1,T.navW[0]+.5)))*18}px)`;
+
+  // Alerta a la familia
+  setO('sos',sosK);$('sos').style.transform=`scale(${lerp(1.04,1,easeOut(range(t,...T.sos)))})`;
+  $('status').style.color=sosK>.5?'#fff':'#202124';
+  const cu=range(t,...T.count),n=Math.max(1,Math.ceil(3*(1-cu)));
+  $('count').textContent=n;$('count2').textContent=n;
+  $('ring').style.background=`conic-gradient(#fff ${(cu*360).toFixed(1)}deg, rgba(255,255,255,.25) 0)`;
+  $('count').style.transform=`scale(${1+.08*Math.max(0,1-((t-T.count[0])%.5)/.2)*(t>T.count[0]&&t<T.count[1]?1:0)})`;
+  setO('sosA',1-smooth(range(t,T.sent,T.sent+.25)));setO('sosB',smooth(range(t,T.sent+.1,T.sent+.4)));
+  for(const[id,t0]of[['c1',T.sent+.35],['c2',T.sent+.6]]){const k=easeOut(range(t,t0,t0+.35));setO(id,k);$(id).style.transform=`translateX(${(1-k)*30}px)`;}
+  setO('liveDot',.4+.6*Math.abs(Math.sin(t*4)));
+
+  // Celular de Ana: aparece, recibe la notificación y vibra
+  const ak=easeOut(range(t,...T.ana)),bz=buzz(t);
+  setO('ana',ak);
+  const jx=bz*(Math.sin(t*170)*6+Math.sin(t*233)*3),jr=bz*Math.sin(t*197)*2.4;
+  $('ana').style.transform=`translate(${(1-ak)*-40+jx}px,${(1-ak)*20}px) rotate(${-3+jr}deg)`;
+  const bk=easeBack(range(t,T.notif,T.notif+.4));
+  $('banner').style.opacity=smooth(range(t,T.notif,T.notif+.12)).toFixed(3);
+  $('banner').style.transform=`translateY(${(1-bk)*-70}px) scale(${lerp(.9,1,bk)})`;
+  for(const id of['vibL','vibR']){$(id).style.opacity=(bz*(.5+.5*Math.abs(Math.sin(t*28)))).toFixed(3);}
+}
+
+// ───────────── Render
+function renderAt(t){drawMap(t);drawFinger(t);updateDOM(t);}
+window.renderAt=renderAt;window.DURATION=DURATION;
+
+{
+  const src=await(await fetch('../../dist/logo.svg')).text();
+  const mk=col=>URL.createObjectURL(new Blob([src.replaceAll('#f88b62',col)],{type:'image/svg+xml'}));
+  const white=mk('#ffffff'),crimson=mk(CRIMSON);
+  walkerImg=new Image();walkerImg.src=white;await walkerImg.decode();
+  document.querySelectorAll('.logoW').forEach(i=>i.src=white);
+  document.querySelectorAll('.logoC').forEach(i=>i.src=crimson);
+}
+await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+await Promise.all(['700 72px Roboto','300 70px Roboto','500 20px Roboto','400 20px Roboto','700 20px Roboto'].map(f=>document.fonts.load(f).catch(()=>{})));
+await document.fonts.ready;
+renderAt(+qs.get('t')||0);
+window.sceneReady=true;
+
+if(!RENDER){
+  const fit=()=>{const s=Math.min(innerWidth/W,(innerHeight-48)/H);$('stage').style.transform=`scale(${s})`;};
+  addEventListener('resize',fit);fit();$('controls').hidden=false;
+  let playing=!qs.has('t'),t=+qs.get('t')||0,last=performance.now();
+  $('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'Pausa':'Reproducir';last=performance.now();};
+  $('play').textContent=playing?'Pausa':'Reproducir';
+  $('scrub').oninput=e=>{t=+e.target.value;renderAt(t);$('clock').textContent=fmt(t,2)+' s';};
+  addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();$('play').click();}});
+  const loop=now=>{if(playing){t=(t+(now-last)/1000)%DURATION;renderAt(t);$('scrub').value=t;$('clock').textContent=fmt(t,2)+' s';}last=now;requestAnimationFrame(loop);};
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
