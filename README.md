@@ -64,24 +64,3 @@ Caminito es una **propuesta en etapa de prototipo**. Lo que se encuentra en este
 El siguiente paso es un **piloto** en una zona acotada, junto a personas con distintas necesidades de movilidad, para comprobar que las mediciones son confiables, que la app resulta útil en el día a día y cuánto cuesta sostener el servicio. Las funciones descritas son el producto que se busca desarrollar y todavía no son resultados demostrados.
 
 El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/downloads/Caminito_Informe_Rally.docx).
-
----
-
-## Para quien quiera explorar el código
-
-El sitio es estático y no necesita compilación. Para verlo localmente:
-
-```
-python -m http.server 8765 --directory dist
-```
-
-y abrir `http://127.0.0.1:8765` (la demo de la app está en `/prototipo.html`). Hace falta un servidor HTTP: abrir `index.html` directamente con doble clic no funciona.
-
-| Carpeta / archivo | Contenido |
-|---|---|
-| `dist/` | Sitio publicado: visor 3D, informe, costos y prototipo de la app. |
-| `dist/downloads/` | Proyectos FreeCAD, modelos OBJ y el informe original. |
-| `exportar_modelos_web.py` | Script para FreeCAD que actualiza los modelos 3D del sitio. |
-| `video/` | Escenas animadas y el script que las convierte en MP4. Instrucciones en [video/README.md](video/README.md). |
-
-El sitio se publica en Vercel a partir de la carpeta `dist/`.
