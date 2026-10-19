@@ -1,87 +1,87 @@
-# Caminito — Biblioteca de prototipos
+# Caminito
 
-Sitio estatico con visor Three.js y modelos reales exportados desde FreeCAD, el modelo matemático y los costos del informe, y un prototipo interactivo simulado de la app.
+**Veredas más claras para quienes más las necesitan, medidas con celulares que ya nadie usa.**
 
-El proyecto se desarrolla en el contexto del Rally Innovación 2026.
+> 🥈 **2.º puesto en la categoría Impacto Social — sede UTN Facultad Regional Resistencia (UTN FRRe)**
+> Rally Latinoamericano de Innovación 2026 · Desafío 02: *Sensores al servicio de la comunidad*
 
-## Vista local
+---
 
-Desde esta carpeta: `python3 -m http.server 8765 --directory dist` (en Windows, `python` en lugar de `python3`).
+## El problema
 
-Abrir `http://127.0.0.1:8765`. Se necesita un servidor HTTP para cargar modulos y geometria; no abrir index.html con file://.
+Para muchas personas, salir a la calle implica una pregunta previa: *¿voy a poder pasar?*
+Un escalón sin rampa, una pendiente pronunciada, baldosas rotas o una rampa bloqueada por un auto pueden convertir un trayecto corto en un recorrido imposible. Hoy esa información casi nunca está disponible antes de salir, y quien la necesita suele depender de que otra persona revise el camino.
 
-## Publicación
+Esto afecta a usuarios de silla de ruedas, andador, muletas o bastón, a personas con baja visión, a adultos mayores y a familias con cochecito.
 
-El sitio se publica en Vercel. `vercel.json` toma `dist/` como salida y activa `cleanUrls`, por eso `/prototipo` funciona sin `.html`. No hay paso de compilación.
+## La idea
 
-## Biblioteca
+Caminito es un mapa de veredas que muestra **por dónde se puede pasar y por qué**, adaptado a la forma en que cada persona se desplaza.
 
-El menú lateral (`BIBLIOTECA 05`) tiene cinco opciones:
+Una misma vereda no representa la misma dificultad para una silla de ruedas que para un cochecito. Por eso Caminito no se limita a pintar calles de colores: explica qué barrera hay, de dónde salió el dato, cuándo se registró y qué tramos todavía no tienen información.
 
-| N.º | Opción | Contenido |
+El desafío del Rally proponía darles una segunda vida a los celulares en desuso. Caminito los convierte en sensores: un celular viejo puede medir inclinaciones, vibraciones y sacar fotos de obstáculos, y esa información alimenta el mapa.
+
+## Cómo funciona
+
+El sistema tiene tres partes que se complementan:
+
+| | Qué es | Para qué sirve |
 |---|---|---|
-| 01 | Caminante (`carrito`) | Carro de tres apoyos para relevar veredas. CAD `CarroVeredas.FCStd`. |
-| 02 | Kit (`carcasa`) | Soporte de celular con pantalla accesible y montaje orientable. CAD `PrototipoCarcasasCelulares.FCStd`. |
-| 03 | Batería (`powerbank`) | Módulo de energía desmontable sujeto al bastidor. Comparte el CAD del Kit. |
-| 04 | Modelo matemático (`#modelo`) | Apartado 3.2 del informe. |
-| 05 | Costos (`#costos`) | Apartado 3.3 del informe. |
+| 📱 **App Caminito** | Mapa personal, rutas explicadas, avisos y reportes. | Planificar un recorrido según las propias necesidades. Se puede usar sin ningún equipo adicional. |
+| 🛠️ **Kit Caminito** | Un celular recuperado, montado en la silla, andador o cochecito de la persona. | Aporta datos durante los recorridos cotidianos y mantiene el mapa actualizado. |
+| 🛒 **Caminante** | Un carro de tres ruedas con celulares fijados al chasis, operado por el equipo técnico. | Relevar veredas de forma sistemática, verificar reportes y servir de referencia de calibración. |
 
-## Contenido
+A eso se suma la participación de la comunidad: vecinos que avisan sobre una obra o una rampa bloqueada, y familiares que ayudan a planificar un viaje.
 
-- `dist/index.html`, `style.css`, `app.js`: interfaz, fichas de los modelos y carga de las secciones del informe.
-- `dist/models/*.json`: triangulos y colores de las piezas visibles, en metros.
-- `dist/downloads/`: proyectos FreeCAD, paquetes OBJ/MTL actuales y copia de `Caminito_Informe_Rally.docx`.
-- `dist/modelo-fragmento.html`, `modelo.js`, `modelo-integrado.css`: sección del modelo matemático.
-- `dist/costos-fragmento.html`, `costos.js`, `costos.css`: sección de costos.
-- `dist/prototipo.html`, `prototipo.css`, `prototipo.js`: prototipo interactivo.
-- `dist/vendor/`: Three.js 0.180.0, OrbitControls y licencia MIT. El visor no requiere CDN.
-- `exportar_modelos_web.py`: ejecutar dentro de FreeCAD, con los proyectos abiertos, para actualizar la geometria exportada. No cambia los documentos CAD.
-- `video/`: secuencias animadas renderizadas a MP4 (ver más abajo).
+### Un ejemplo
 
-## Agregar un modelo
+Una persona que usa andador indica en la app que le cuestan las subidas. Consulta cómo llegar a un centro de salud y Caminito le muestra dos alternativas: una más corta con una pendiente fuerte y otra un poco más larga pero mejor relevada. Elige la segunda. En el camino encuentra una rampa bloqueada, la reporta desde la app y, una vez revisado, ese aviso queda disponible para las próximas personas que pasen por ahí.
 
-Exportar su geometria con el mismo esquema JSON y agregar una ficha al objeto `models` de `dist/app.js`. La ficha define las medidas, explicacion, pendientes y descargas. Actualizar el contador de biblioteca en index.html. No inventar dimensiones: obtenerlas del CAD y distinguir medidas objetivo de medidas verificadas.
+## A quién beneficia
 
-Una sección de texto del informe se agrega en `informationViews` de `dist/app.js`, con su fragmento HTML, su script y una `<section>` vacía en index.html. El fragmento se descarga la primera vez que se abre la opción.
+- **A quien se desplaza**, que gana autonomía para anticipar barreras y elegir con información, sin depender de otra persona.
+- **A la comunidad**, que puede aportar y confirmar el estado de su barrio.
+- **Al municipio**, que obtiene evidencia concreta para priorizar reparaciones, seguir reclamos y verificar que una obra resolvió el problema.
+- **Al ambiente**, porque celulares que iban a quedar en un cajón vuelven a tener una función útil.
 
-## Alcance del visor CAD
+## Principios
 
-El visor permite rotar, acercar, cambiar vistas, mostrar malla y despiece ilustrativo, seleccionar piezas, buscar y ocultar componentes. No modifica CAD. Las fichas y archivos son una captura exportada del proyecto y no se sincronizan automaticamente con FreeCAD.
+- **Accesible por diseño:** la app se puede usar con texto, voz, sonido o vibración, con alto contraste y texto ampliado. No exige GPS, cámara ni micrófono para consultar.
+- **Transparente:** cada dato muestra su origen, su fecha y su calidad. Un tramo sin información se muestra como tal, no se inventa.
+- **La persona decide:** controla su perfil, sus recorridos y el uso de sus datos. Las fotos publicadas ocultan rostros y patentes, y los recorridos personales nunca se hacen públicos.
+- **Sin costo para quien lo necesita:** el objetivo es que la herramienta sea gratuita para sus usuarios, con el apoyo de la universidad, el municipio y organizaciones sociales.
 
-Las carcasas y mecanismos son prototipos conceptuales. El ajuste universal, los cierres, materiales y autonomia de bateria requieren definicion y validacion.
+## Estado del proyecto
 
-## Modelo matemático del informe
+Caminito es una **propuesta en etapa de prototipo**. Lo que se encuentra en este repositorio es:
 
-La cuarta opción de la biblioteca (`#modelo`) presenta el apartado 3.2 de `Caminito_Informe_Rally.docx` dentro de la página principal. El contenido está en `dist/modelo-fragmento.html`; los controles de `dist/modelo.js` calculan ejemplos ilustrativos del filtro complementario, las pendientes y la profundidad estéreo. No representan mediciones reales ni cambian el modelo del informe. La copia en `dist/downloads/Caminito_Informe_Rally.docx` permite descargar el documento original desde la web.
+- Un **prototipo interactivo de la app**, con datos simulados, para mostrar la experiencia de uso.
+- Los **modelos 3D** del carro Caminante y del Kit, diseñados en FreeCAD y visibles desde el navegador.
+- El **informe del proyecto**, con el modelo matemático para medir pendientes y obstáculos y la estimación de costos del carro (entre 140.000 y 210.000 pesos argentinos en materiales).
+- **Videos** que explican el funcionamiento.
 
-La quinta opción (`#costos`) presenta el apartado 3.3 de viabilidad económica, incluida su tabla de ocho rubros y las aclaraciones sobre el alcance del subtotal. `dist/costos.js` permite comparar los extremos mínimo y máximo sin modificar los importes del informe.
+El siguiente paso es un **piloto** en una zona acotada, junto a personas con distintas necesidades de movilidad, para comprobar que las mediciones son confiables, que la app resulta útil en el día a día y cuánto cuesta sostener el servicio. Las funciones descritas son el producto que se busca desarrollar y todavía no son resultados demostrados.
 
-## Prototipo interactivo de Caminito
+El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/downloads/Caminito_Informe_Rally.docx).
 
-La sección `/prototipo` (o `/prototipo.html` con el servidor HTTP local) muestra una demo completamente simulada, separada del visor CAD. No aparece en el menú de la biblioteca.
+---
 
-- **Mi recorrido:** preferencias, tres alternativas sobre un mapa SVG ilustrativo, origen y estado de los registros, capas, zoom y un recorrido guiado con avance manual.
-- **Comunidad:** avisos de ejemplo, confirmaciones y reportes locales con fotografía opcional. Los aportes se mantienen solo en memoria y se eliminan al recargar. No se envían reclamos ni archivos.
-- **Segunda vida:** tres perfiles ficticios de celulares, asignación de funciones y circuito propuesto de recuperación y préstamo. El diagnóstico no inspecciona el dispositivo.
-- **Asistente:** respuestas predefinidas para explicar la demo; no utiliza un modelo de IA ni un servicio externo.
-- **Accesibilidad:** controles por teclado, diálogos nativos, vista de alto contraste y texto ampliado, movimiento reducido e indicaciones con la síntesis de voz del navegador cuando esté disponible.
+## Para quien quiera explorar el código
 
-No solicita geolocalización, micrófono, cámara ni sensores. No calcula rutas reales ni publica mediciones, y el mapa no debe utilizarse para navegar en la ciudad. Los únicos archivos seleccionados por la persona se muestran como vista previa local. La tipografía conserva la carga desde Google Fonts del sitio original.
-
-No requiere compilación ni nuevas dependencias.
-
-## Videos
-
-`video/` contiene escenas HTML animadas que `video/render.mjs` captura cuadro por cuadro con Chrome (Puppeteer) y codifica en MP4 con ffmpeg. No forma parte del sitio publicado.
-
-- `como-funciona/`: 03 Cómo funciona, 40 s, con el modelo real de Caminante.
-- `ruta-andador/`: 04 Ruta segura al hospital, 15 s, app simulada con perfil andador.
+El sitio es estático y no necesita compilación. Para verlo localmente:
 
 ```
-cd video
-npm install
-node render.mjs                         # salida/03-como-funciona.mp4
-node render.mjs --escena ruta-andador   # salida/04-ruta-andador.mp4
+python -m http.server 8765 --directory dist
 ```
 
-Necesita Google Chrome instalado (otra ruta se indica con `CHROME_PATH`). Guiones, tiempos y opciones de render en [video/README.md](video/README.md).
+y abrir `http://127.0.0.1:8765` (la demo de la app está en `/prototipo.html`). Hace falta un servidor HTTP: abrir `index.html` directamente con doble clic no funciona.
+
+| Carpeta / archivo | Contenido |
+|---|---|
+| `dist/` | Sitio publicado: visor 3D, informe, costos y prototipo de la app. |
+| `dist/downloads/` | Proyectos FreeCAD, modelos OBJ y el informe original. |
+| `exportar_modelos_web.py` | Script para FreeCAD que actualiza los modelos 3D del sitio. |
+| `video/` | Escenas animadas y el script que las convierte en MP4. Instrucciones en [video/README.md](video/README.md). |
+
+El sitio se publica en Vercel a partir de la carpeta `dist/`.
