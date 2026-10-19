@@ -5,6 +5,8 @@
 > 🥈 **2.º puesto en la categoría Impacto Social — sede UTN Facultad Regional Resistencia (UTN FRRe)**
 > Rally Latinoamericano de Innovación 2026 · Desafío 02: *Sensores al servicio de la comunidad*
 
+▶️ **[Ver el video de Caminito en YouTube](https://youtu.be/nzMUxgbWwb0)**
+
 ---
 
 ## El problema
@@ -64,3 +66,15 @@ Caminito es una **propuesta en etapa de prototipo**. Lo que se encuentra en este
 El siguiente paso es un **piloto** en una zona acotada, junto a personas con distintas necesidades de movilidad, para comprobar que las mediciones son confiables, que la app resulta útil en el día a día y cuánto cuesta sostener el servicio. Las funciones descritas son el producto que se busca desarrollar y todavía no son resultados demostrados.
 
 El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/downloads/Caminito_Informe_Rally.docx).
+
+## Integrantes
+
+- Duarte Tomás
+- Kalchichen Lucas
+- Kozak Riehme Paula
+- Lovera Gaston
+- Orban Gonzalo
+- Rodriguez Leiva Juan Ignacio
+- Sandoval Lautaro
+- Sodja Ivo
+- Zapata Jerónimo
