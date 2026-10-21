@@ -5,6 +5,7 @@ const iconPaths = {
   route:'<circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h8a4 4 0 0 1 0 8H9a4 4 0 0 0 0 8h7"/>',
   people:'<circle cx="12" cy="7" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3M3 10a3 3 0 0 0 0 6m18-6a3 3 0 0 1 0 6M2 21v-2m20 2v-2"/>',
   phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4m-3 14h2"/>',
+  back:'<path d="M20 12H4m6-6-6 6 6 6"/>',
   cube:'<path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 0v10m0 10V12m-9-5 9 5 9-5"/>',
   accessibility:'<circle cx="12" cy="4" r="2"/><path d="M4 9h16m-8 0v6m0 0-5 7m5-7 5 7"/>',
   spark:'<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/>',
