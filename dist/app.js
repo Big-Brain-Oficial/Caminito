@@ -8,11 +8,12 @@ const icons = {
   battery:'<rect x="3" y="5" width="20" height="15" rx="2"/><path d="M8 5v15m10-15v15m-5-10-3 5h4l-2 4M9 2h7"/>',
   math:'<path d="M3 7h20M7 3v20m6-12 7 8m0-8-7 8"/><circle cx="18" cy="5" r="2"/>',
   costs:'<rect x="5" y="2" width="16" height="22" rx="2"/><path d="M8 7h10M8 11h10M8 15h4m4 0h2M8 20h10"/>',
+  demo:'<rect x="7" y="2" width="12" height="22" rx="2"/><path d="M11 5h4M13 9l4 9-4-2-4 2Z"/>',
   fullscreen:'<path d="M2 6V2h4m4 0h4v4m0 4v4h-4m-4 0H2v-4"/>',
   rotate:'<path d="M13 5a5 5 0 1 0 0 6M13 1v4H9"/>',
   reset:'<path d="M3 5a5 5 0 1 1-1 5M3 1v4h4"/>'
 };
-const svg = name => `<svg viewBox="0 0 ${['car','case','battery','math','costs'].includes(name)?26:16} ${['car','case','battery','math','costs'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
+const svg = name => `<svg viewBox="0 0 ${['car','case','battery','math','costs','demo'].includes(name)?26:16} ${['car','case','battery','math','costs','demo'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
 const models = {
   carrito: {
     title:'Caminante',short:'Caminante',category:'Movilidad · Relevamiento',icon:'car',number:'01',code:'CM–001',
@@ -72,6 +73,10 @@ costsButton.className='model-link';costsButton.dataset.model='costos';
 costsButton.innerHTML=`<span class="nav-model-icon">${svg('costs')}</span><span><strong>Costos</strong><small>Informe · Materiales</small></span><span class="nav-arrow">↗</span>`;
 costsButton.onclick=()=>{location.hash='costos';};
 $('catalog').append(costsButton);
+const demoLink=document.createElement('a');
+demoLink.className='model-link';demoLink.href='./prototipo';
+demoLink.innerHTML=`<span class="nav-model-icon">${svg('demo')}</span><span><strong>Probar Caminito</strong><small>Prototipo · Demo interactiva</small></span><span class="nav-arrow">↗</span>`;
+$('catalog').append(demoLink);
 for (const id of ['fullscreen','rotate','reset']) $(id).innerHTML = svg(id);
 
 function initViewer() {
