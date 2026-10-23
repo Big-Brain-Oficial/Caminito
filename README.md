@@ -81,4 +81,4 @@ El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/d
 
 ## Contacto
 
-¿Querés sumarte al piloto, donar un celular en desuso o saber más del proyecto? Escribinos a **[gonzaorban@gmail.com](mailto:gonzaorban@gmail.com)**.
+Caminito fue una idea de solución presentada en el Rally y no se está llevando a cabo, pero seguimos disponibles para consultas y dudas sobre la propuesta. Escribinos a **[gonzaorban@gmail.com](mailto:gonzaorban@gmail.com)**.
