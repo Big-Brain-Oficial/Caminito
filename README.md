@@ -78,3 +78,7 @@ El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/d
 - Sandoval Lautaro
 - Sodja Ivo
 - Zapata Jerónimo
+
+## Contacto
+
+Caminito fue una idea de solución presentada en el Rally y no se está llevando a cabo, pero seguimos disponibles para consultas y dudas sobre la propuesta. Escribinos a **[gonzaorban@gmail.com](mailto:gonzaorban@gmail.com)**.
