@@ -9,11 +9,12 @@ const icons = {
   math:'<path d="M3 7h20M7 3v20m6-12 7 8m0-8-7 8"/><circle cx="18" cy="5" r="2"/>',
   costs:'<rect x="5" y="2" width="16" height="22" rx="2"/><path d="M8 7h10M8 11h10M8 15h4m4 0h2M8 20h10"/>',
   demo:'<rect x="7" y="2" width="12" height="22" rx="2"/><path d="M11 5h4M13 9l4 9-4-2-4 2Z"/>',
+  contact:'<rect x="2" y="5" width="22" height="16" rx="2"/><path d="m3 7 10 8 10-8"/>',
   fullscreen:'<path d="M2 6V2h4m4 0h4v4m0 4v4h-4m-4 0H2v-4"/>',
   rotate:'<path d="M13 5a5 5 0 1 0 0 6M13 1v4H9"/>',
   reset:'<path d="M3 5a5 5 0 1 1-1 5M3 1v4h4"/>'
 };
-const svg = name => `<svg viewBox="0 0 ${['car','case','battery','math','costs','demo'].includes(name)?26:16} ${['car','case','battery','math','costs','demo'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
+const svg = name => `<svg viewBox="0 0 ${['car','case','battery','math','costs','demo','contact'].includes(name)?26:16} ${['car','case','battery','math','costs','demo','contact'].includes(name)?26:16}" aria-hidden="true">${icons[name]}</svg>`;
 const models = {
   carrito: {
     title:'Caminante',short:'Caminante',category:'Movilidad · Relevamiento',icon:'car',number:'01',code:'CM–001',
@@ -77,6 +78,11 @@ const demoLink=document.createElement('a');
 demoLink.className='model-link';demoLink.href='./prototipo';
 demoLink.innerHTML=`<span class="nav-model-icon">${svg('demo')}</span><span><strong>Probar Caminito</strong><small>Prototipo · Demo interactiva</small></span><span class="nav-arrow">↗</span>`;
 $('catalog').append(demoLink);
+const contactButton=document.createElement('button');
+contactButton.className='model-link';contactButton.dataset.model='contacto';
+contactButton.innerHTML=`<span class="nav-model-icon">${svg('contact')}</span><span><strong>Contacto</strong><small>Equipo · Correo</small></span><span class="nav-arrow">↗</span>`;
+contactButton.onclick=()=>{location.hash='contacto';};
+$('catalog').append(contactButton);
 for (const id of ['fullscreen','rotate','reset']) $(id).innerHTML = svg(id);
 
 function initViewer() {
@@ -235,7 +241,8 @@ function fillInformation(key){
 }
 const informationViews={
   modelo:{id:'math-view',title:'Modelo matemático',file:'./modelo-fragmento.html',script:'./modelo.js'},
-  costos:{id:'cost-view',title:'Costos',file:'./costos-fragmento.html',script:'./costos.js'}
+  costos:{id:'cost-view',title:'Costos',file:'./costos-fragmento.html',script:'./costos.js'},
+  contacto:{id:'contact-view',title:'Contacto'}
 };
 const informationPromises=new Map();
 async function showInformation(key){
@@ -250,6 +257,7 @@ async function showInformation(key){
     button.classList.toggle('active',active);
     if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
   }
+  if(!page.file)return;
   if(!informationPromises.has(key)){
     const promise=(async()=>{
       const response=await fetch(page.file);

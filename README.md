@@ -78,3 +78,7 @@ El informe completo está en [dist/downloads/Caminito_Informe_Rally.docx](dist/d
 - Sandoval Lautaro
 - Sodja Ivo
 - Zapata Jerónimo
+
+## Contacto
+
+¿Querés sumarte al piloto, donar un celular en desuso o saber más del proyecto? Escribinos a **[gonzaorban@gmail.com](mailto:gonzaorban@gmail.com)**.
